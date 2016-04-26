@@ -15,6 +15,10 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
 
 public class GameActivity extends AppCompatActivity implements
         RecognitionListener{
@@ -24,7 +28,7 @@ public class GameActivity extends AppCompatActivity implements
     private ProgressBar progressBar;
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
-    private String LOG_TAG = "VoiceRecognitionActivity";
+    private static final String LOG_TAG = GameActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,11 @@ public class GameActivity extends AppCompatActivity implements
             }
         });
 
+        LancasterStemmer stemmer = new LancasterStemmer();
+        List<String> list = stemmer.stemAll(Arrays.asList(new String("this is not a tokenizer").split(" ")));
+        for(String string:list) {
+            Log.d(LOG_TAG, string);
+        }
     }
 
     @Override

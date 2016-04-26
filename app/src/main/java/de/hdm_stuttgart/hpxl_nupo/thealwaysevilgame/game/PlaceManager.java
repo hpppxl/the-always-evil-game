@@ -40,24 +40,44 @@ public class PlaceManager {
 //endregion
 
 //region Properties & Members
-    private Place mCurrentPlace;
+    private PlaceIdentifier mCurrentPlace;
 //endregion
 
 //region Constructors
 //endregion
 
 //region Methods
-    public void goNorth(){
-
+    public PlaceIdentifier goNorth(){
+        PlaceIdentifier newLocation = mCurrentPlace.getPlace().goNorth();
+        if(newLocation != null){
+            mCurrentPlace = newLocation;
+            return newLocation;
+        }
+        return null;
     }
-    public void goEast(){
-
+    public PlaceIdentifier goEast(){
+        PlaceIdentifier newLocation = mCurrentPlace.getPlace().goEast();
+        if(newLocation != null){
+            mCurrentPlace = newLocation;
+            return newLocation;
+        }
+        return null;
     }
-    public void goSouth(){
-
+    public PlaceIdentifier goSouth(){
+        PlaceIdentifier newLocation = mCurrentPlace.getPlace().goSouth();
+        if(newLocation != null){
+            mCurrentPlace = newLocation;
+            return newLocation;
+        }
+        return null;
     }
-    public void goWest(){
-
+    public PlaceIdentifier goWest(){
+        PlaceIdentifier newLocation = mCurrentPlace.getPlace().goWest();
+        if(newLocation != null){
+            mCurrentPlace = newLocation;
+            return newLocation;
+        }
+        return null;
     }
 //endregion
 
