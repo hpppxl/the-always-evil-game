@@ -19,8 +19,8 @@ public class Tokenizer {
 //endregion
 
 //region Methods
-    public List<String> tokenize(String string){
-        return Arrays.asList(string.split(TOKEN_SEPARATOR));
+    public ArrayList<String> tokenize(String string){
+        return new ArrayList<>(Arrays.asList(string.split(TOKEN_SEPARATOR)));
     }
 //endregion
 

@@ -781,9 +781,9 @@ public class LancasterStemmer
         return result;
     }
 
-    public List<String> stemAll(List<String> tokenList){
+    public ArrayList<String> stemAll(List<String> tokenList){
 
-        List<String> stemmedTokenList = new ArrayList<String>(tokenList.size());
+        ArrayList<String> stemmedTokenList = new ArrayList<String>(tokenList.size());
 
         for(String token:tokenList){
             stemmedTokenList.add(this.stem(token));

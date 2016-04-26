@@ -19,16 +19,22 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.StopWordFilter;
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.Tokenizer;
 
 public class GameActivity extends AppCompatActivity implements
         RecognitionListener{
 
+    private static final String LOG_TAG = GameActivity.class.getSimpleName();
     private TextView returnedText;
     private ToggleButton toggleButton;
     private ProgressBar progressBar;
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
-    private static final String LOG_TAG = GameActivity.class.getSimpleName();
+    private StopWordFilter stopWordFilter = new StopWordFilter();
+    private Tokenizer tokenizer = new Tokenizer();
+    private LancasterStemmer stemmer = new LancasterStemmer();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +54,8 @@ public class GameActivity extends AppCompatActivity implements
                 this.getPackageName());
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 4000);
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
 
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -69,12 +74,11 @@ public class GameActivity extends AppCompatActivity implements
             }
         });
 
-        LancasterStemmer stemmer = new LancasterStemmer();
-        List<String> list = stemmer.stemAll(Arrays.asList(new String("this is not a tokenizer").split(" ")));
-        for(String string:list) {
-            Log.d(LOG_TAG, string);
-        }
+
+
     }
+
+
 
     @Override
     public void onResume() {
@@ -125,11 +129,11 @@ public class GameActivity extends AppCompatActivity implements
 
     @Override
     public void onPartialResults(Bundle arg0) {
-        Log.i(LOG_TAG, "onPartialResults");
+        /*Log.i(LOG_TAG, "onPartialResults");
         Log.i(LOG_TAG, "" + arg0.keySet().size());
         Log.i(LOG_TAG, "" + arg0.keySet().toArray()[0]);
         Log.i(LOG_TAG, "" + arg0.keySet().toArray()[1]);
-        Log.i(LOG_TAG, "" + arg0.keySet().toArray()[2]);
+        Log.i(LOG_TAG, "" + arg0.keySet().toArray()[2]);*/
 
     }
 
@@ -145,9 +149,14 @@ public class GameActivity extends AppCompatActivity implements
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         String text = "";
         for (String result : matches)
-            text += result + "\n";
+            text += result + " ";
 
-        returnedText.setText(text);
+
+        List<String> list = stemmer.stemAll(stopWordFilter.filter(tokenizer.tokenize(text)));
+        for(String string:list) {
+            Log.d(LOG_TAG, string);
+
+        }
     }
 
     @Override
