@@ -1,5 +1,8 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game;
 
+import java.util.List;
+
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.Blacksmith;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.Carpenter;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.Clearing;
@@ -10,6 +13,8 @@ import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.Tavern;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.TownHall;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.TravelingSalesman;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.VillageGate;
+
+import static de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager.PlaceIdentifier.CLEARING;
 
 /**
  * Created by nerd on 26/04/16.
@@ -37,16 +42,45 @@ public class PlaceManager {
             return this.mPlace;
         }
     }
+
+    private static final String TOKEN_NORTH = LancasterStemmer.stem("north");
+    private static final String TOKEN_EAST = LancasterStemmer.stem("east");
+    private static final String TOKEN_SOUTH = LancasterStemmer.stem("south");
+    private static final String TOKEN_WEST = LancasterStemmer.stem("west");
+
 //endregion
 
-//region Properties & Members
-    private PlaceIdentifier mCurrentPlace;
+    public Place getCurrentPlace() {
+        return mCurrentPlace.getPlace();
+    }
+
+    //region Properties & Members
+    private PlaceIdentifier mCurrentPlace = CLEARING;
 //endregion
 
 //region Constructors
 //endregion
 
 //region Methods
+    public String parseSpeechInput(List<String> wordlist){
+        if(wordlist.contains(TOKEN_NORTH)){
+            goNorth();
+            return getCurrentPlace().getWelcomeMediaFile();
+        }
+        else if(wordlist.contains(TOKEN_EAST)){
+            goEast();
+            return getCurrentPlace().getWelcomeMediaFile();
+        }
+        else if(wordlist.contains(TOKEN_SOUTH)){
+            goSouth();
+            return getCurrentPlace().getWelcomeMediaFile();
+        }
+        else if(wordlist.contains(TOKEN_WEST)){
+            goWest();
+            return getCurrentPlace().getWelcomeMediaFile();
+        }
+        return null;
+    }
     public PlaceIdentifier goNorth(){
         PlaceIdentifier newLocation = mCurrentPlace.getPlace().goNorth();
         if(newLocation != null){

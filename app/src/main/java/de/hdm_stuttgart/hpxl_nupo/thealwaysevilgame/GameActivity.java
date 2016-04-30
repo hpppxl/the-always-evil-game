@@ -1,7 +1,8 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -10,39 +11,41 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.Game;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.StopWordFilter;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.Tokenizer;
 
 public class GameActivity extends AppCompatActivity implements
-        RecognitionListener{
+        RecognitionListener, MediaPlayer.OnCompletionListener{
 
     private static final String LOG_TAG = GameActivity.class.getSimpleName();
     private TextView returnedText;
-    private ToggleButton toggleButton;
+    private ImageButton speakButton;
+    private boolean performingSpeechSetup = false;
     private ProgressBar progressBar;
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
-    private StopWordFilter stopWordFilter = new StopWordFilter();
-    private Tokenizer tokenizer = new Tokenizer();
-    private LancasterStemmer stemmer = new LancasterStemmer();
+    private MediaPlayer mMediaPlayer = new MediaPlayer();
+    private Game mGame = new Game();
 
 
-    @Override
+
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         returnedText = (TextView) findViewById(R.id.textView1);
         progressBar = (ProgressBar) findViewById(R.id.progressBar1);
-        toggleButton = (ToggleButton) findViewById(R.id.toggleButton1);
+        speakButton = (ImageButton) findViewById(R.id.speakButton);
 
         progressBar.setVisibility(View.INVISIBLE);
         speech = SpeechRecognizer.createSpeechRecognizer(this);
@@ -56,26 +59,12 @@ public class GameActivity extends AppCompatActivity implements
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 4000);
-
-        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-                if (isChecked) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    progressBar.setIndeterminate(true);
-                    speech.startListening(recognizerIntent);
-                } else {
-                    progressBar.setIndeterminate(false);
-                    progressBar.setVisibility(View.INVISIBLE);
-                    speech.stopListening();
-                }
-            }
-        });
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 4000);
 
 
+        mMediaPlayer.setOnCompletionListener(this);
 
+        playMediaFile("village.ogg");
     }
 
 
@@ -111,15 +100,17 @@ public class GameActivity extends AppCompatActivity implements
     public void onEndOfSpeech() {
         Log.i(LOG_TAG, "onEndOfSpeech");
         progressBar.setIndeterminate(true);
-        toggleButton.setChecked(false);
+        disableSpeakButton();
     }
 
     @Override
     public void onError(int errorCode) {
+        if (performingSpeechSetup && errorCode == SpeechRecognizer.ERROR_NO_MATCH) return;
         String errorMessage = getErrorText(errorCode);
         Log.d(LOG_TAG, "FAILED " + errorMessage);
         returnedText.setText(errorMessage);
-        toggleButton.setChecked(false);
+        disableSpeakButton();
+        playRandomWhatSound();
     }
 
     @Override
@@ -129,17 +120,12 @@ public class GameActivity extends AppCompatActivity implements
 
     @Override
     public void onPartialResults(Bundle arg0) {
-        /*Log.i(LOG_TAG, "onPartialResults");
-        Log.i(LOG_TAG, "" + arg0.keySet().size());
-        Log.i(LOG_TAG, "" + arg0.keySet().toArray()[0]);
-        Log.i(LOG_TAG, "" + arg0.keySet().toArray()[1]);
-        Log.i(LOG_TAG, "" + arg0.keySet().toArray()[2]);*/
-
-    }
+     }
 
     @Override
     public void onReadyForSpeech(Bundle arg0) {
         Log.i(LOG_TAG, "onReadyForSpeech");
+        performingSpeechSetup = false;
     }
 
     @Override
@@ -147,16 +133,11 @@ public class GameActivity extends AppCompatActivity implements
         Log.i(LOG_TAG, "onResults");
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        String text = "";
-        for (String result : matches)
-            text += result + " ";
+        String text = matches.get(0);
 
+        List<String> list = LancasterStemmer.stemAll(StopWordFilter.filter(Tokenizer.tokenize(text)));
 
-        List<String> list = stemmer.stemAll(stopWordFilter.filter(tokenizer.tokenize(text)));
-        for(String string:list) {
-            Log.d(LOG_TAG, string);
-
-        }
+        playMediaFile(mGame.parseSpeechInput(list));
     }
 
     @Override
@@ -202,4 +183,35 @@ public class GameActivity extends AppCompatActivity implements
         return message;
     }
 
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        mMediaPlayer.reset();
+        performingSpeechSetup = true;
+        speech.startListening(recognizerIntent);
+        enableSpeakButton();
+
+    }
+
+    public void enableSpeakButton(){
+        speakButton.setBackgroundResource(R.drawable.mic_background_active);
+    }
+    public void disableSpeakButton(){
+        speakButton.setBackgroundResource(R.drawable.mic_background_inactive);
+    }
+
+    public void playMediaFile(String filename){
+        try {
+            AssetFileDescriptor fileDescriptor = this.getAssets().openFd(filename);
+            mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
+            fileDescriptor.close();
+            mMediaPlayer.prepare();
+            mMediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playRandomWhatSound(){
+        playMediaFile("globalSounds/what" + (int)((Math.random()*4)+1) + ".ogg");
+    }
 }

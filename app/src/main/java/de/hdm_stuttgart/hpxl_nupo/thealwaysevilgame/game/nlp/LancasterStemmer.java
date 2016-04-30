@@ -54,6 +54,8 @@ public class LancasterStemmer
                     "ultra" ,
             };
 
+
+
     /**	Default stemming rules.
      *
      *	<p>
@@ -190,7 +192,7 @@ public class LancasterStemmer
 
 	/*	Array of rules. */
 
-    protected Vector<String> ruleTable;
+    protected static Vector<String> ruleTable;
 
 	/*	Index to rule table.
 	 *
@@ -205,18 +207,16 @@ public class LancasterStemmer
 	 *	</p>
 	 */
 
-    protected int[] ruleTableIndex;
+    protected static int[] ruleTableIndex;
 
 	/*	True to remove prefixes when word length is greater than two. */
 
-    protected boolean preStrip;
+    protected static boolean preStrip = true;
 
 
 
-    public LancasterStemmer()
+    static
     {
-        this.preStrip	= true;
-
         loadRules( defaultStemmingRules );
     }
 
@@ -261,7 +261,7 @@ public class LancasterStemmer
      *	@param	rules	String array of rules.
      */
 
-    protected void loadRules( String[] rules )
+    protected static void loadRules( String[] rules )
     {
         //	Table of rules.
 
@@ -310,7 +310,7 @@ public class LancasterStemmer
      *	@return			Zero-based index of first vowel in string.
      */
 
-    protected int firstVowel( String s , int last )
+    protected static int firstVowel( String s , int last )
     {
         char prevChar	= 'a';
         int i;
@@ -334,7 +334,7 @@ public class LancasterStemmer
      *	@return		The string with suffixes removed.
      */
 
-    protected String stripSuffixes( String s )
+    protected static String stripSuffixes( String s )
     {
         //	Is the current rule OK.
 
@@ -659,7 +659,7 @@ public class LancasterStemmer
                         ( c == 'u' );
     }
 
-    protected boolean vowel( char ch , char prev )
+    protected static boolean vowel( char ch , char prev )
     {
         boolean result	= isEnglishVowel( ch );
 
@@ -672,14 +672,14 @@ public class LancasterStemmer
     }
 
 
-    protected boolean isDigit( char c )
+    protected static boolean isDigit( char c )
     {
         return Character.isDigit( c );
     }
 
 
 
-    protected boolean isLetter( char c )
+    protected static boolean isLetter( char c )
     {
         return Character.isLetter( c );
     }
@@ -692,7 +692,7 @@ public class LancasterStemmer
      *	@return		The index, where 'a' = 0 .
      */
 
-    protected int charCode( char ch )
+    protected static int charCode( char ch )
     {
         return ( (int)ch ) - 'a';
     }
@@ -704,7 +704,7 @@ public class LancasterStemmer
      *	@return			The string with prefixes removed.
      */
 
-    protected String stripPrefixes( String s )
+    protected static String stripPrefixes( String s )
     {
         String result	= s;
         String sLower	= s.toLowerCase();
@@ -734,7 +734,7 @@ public class LancasterStemmer
      *	@return		String with non-letters removed.
      */
 
-    protected String clean( String s )
+    protected static String clean( String s )
     {
         StringBuffer result	= new StringBuffer();
 
@@ -756,7 +756,7 @@ public class LancasterStemmer
      *	@return		The stemmed string.
      */
 
-    public String stem( String s )
+    public static String stem( String s )
     {
         //	Copy input string to be stemmed.
 
@@ -781,12 +781,12 @@ public class LancasterStemmer
         return result;
     }
 
-    public ArrayList<String> stemAll(List<String> tokenList){
+    public static ArrayList<String> stemAll(List<String> tokenList){
 
         ArrayList<String> stemmedTokenList = new ArrayList<String>(tokenList.size());
 
         for(String token:tokenList){
-            stemmedTokenList.add(this.stem(token));
+            stemmedTokenList.add(stem(token));
         }
 
         return stemmedTokenList;

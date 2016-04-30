@@ -1,5 +1,7 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places;
 
+import java.util.List;
+
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.Navigator;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager;
 
@@ -35,6 +37,16 @@ public class Clearing extends Place {
     @Override
     public PlaceManager.PlaceIdentifier goWest() {
         return null;
+    }
+
+    @Override
+    public String parseSpeechInput(List<String> wordlist) {
+        return null;
+    }
+
+    @Override
+    public String getWelcomeMediaFile() {
+        return "welcomeMessages/location_clearing.ogg";
     }
 //endregion
 

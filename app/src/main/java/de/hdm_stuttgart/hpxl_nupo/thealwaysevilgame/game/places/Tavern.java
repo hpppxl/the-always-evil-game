@@ -1,5 +1,7 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places;
 
+import java.util.List;
+
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager;
 
 /**
@@ -34,6 +36,16 @@ public class Tavern extends Place{
     @Override
     public PlaceManager.PlaceIdentifier goWest() {
         return PlaceManager.PlaceIdentifier.TOWN_HALL;
+    }
+
+    @Override
+    public String parseSpeechInput(List<String> wordlist) {
+        return null;
+    }
+
+    @Override
+    public String getWelcomeMediaFile() {
+        return "welcomeMessages/location_tavern.ogg";
     }
 //endregion
 //endregion

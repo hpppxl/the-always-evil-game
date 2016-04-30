@@ -13,14 +13,14 @@ public class StopWordFilter {
 //endregion
 
 //region Properties & Members
-    private List<String> stopWordList = Arrays.asList(STOP_WORDS);
+    private static List<String> stopWordList = Arrays.asList(STOP_WORDS);
 //endregion
 
 //region Constructors
 //endregion
 
 //region Methods
-    public List<String> filter(ArrayList<String> unfilteredList){
+    public static List<String> filter(ArrayList<String> unfilteredList){
         List<String> filteredList = (List<String>)unfilteredList.clone();
         filteredList.removeAll(stopWordList);
         return filteredList;

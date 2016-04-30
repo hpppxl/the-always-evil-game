@@ -1,5 +1,7 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places;
 
+import java.util.List;
+
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager;
 
 /**
@@ -15,7 +17,7 @@ public class Blacksmith extends Place{
 //region Constructors
 //endregion
 
-//region Methods
+
 //region Methods
     @Override
     public PlaceManager.PlaceIdentifier goNorth() {
@@ -35,8 +37,18 @@ public class Blacksmith extends Place{
     public PlaceManager.PlaceIdentifier goWest() {
         return null;
     }
+
+    @Override
+    public String parseSpeechInput(List<String> wordlist) {
+        return null;
+    }
+
+    @Override
+    public String getWelcomeMediaFile() {
+        return "welcomeMessages/location_blacksmith.ogg";
+    }
 //endregion
-//endregion
+
 
 //region Inner Classes / Interfaces
 //endregion

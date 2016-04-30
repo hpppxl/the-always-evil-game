@@ -8,11 +8,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:gravity="center"
     android:background="@color/colorBackground"
     tools:context="de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.GameActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/location"
@@ -33,7 +34,7 @@
     </RelativeLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/inventory"
@@ -106,20 +107,14 @@
         android:layout_marginTop="47dp" />
 
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:src="@android:drawable/ic_btn_speak_now" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:id="@+id/speakButton"
+        android:background="@drawable/mic_background_inactive"
+        android:layout_width="@dimen/mic_size"
+        android:layout_height="@dimen/mic_size"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
+        android:src="@android:drawable/ic_btn_speak_now"
         android:text="ToggleButton" />
 </LinearLayout>

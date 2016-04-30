@@ -1,5 +1,7 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places;
 
+import java.util.List;
+
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.Navigator;
 
 /**
@@ -16,6 +18,9 @@ public abstract class Place implements Navigator{
 //endregion
 
 //region Methods
+    public abstract String parseSpeechInput(List<String> wordlist);
+
+    public abstract String getWelcomeMediaFile();
 //endregion
 
 //region Inner Classes / Interfaces

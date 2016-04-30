@@ -1,5 +1,7 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places;
 
+import java.util.List;
+
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager;
 
 /**
@@ -34,6 +36,16 @@ public PlaceManager.PlaceIdentifier goNorth() {
     @Override
     public PlaceManager.PlaceIdentifier goWest() {
         return PlaceManager.PlaceIdentifier.CARPENTER;
+    }
+
+    @Override
+    public String parseSpeechInput(List<String> wordlist) {
+        return null;
+    }
+
+    @Override
+    public String getWelcomeMediaFile() {
+        return "welcomeMessages/location_townhall.ogg";
     }
 //endregion
 //endregion

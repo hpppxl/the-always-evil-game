@@ -1,5 +1,7 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places;
 
+import java.util.List;
+
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager;
 
 /**
@@ -34,6 +36,16 @@ public class MarketPlace extends Place{
     @Override
     public PlaceManager.PlaceIdentifier goWest() {
         return PlaceManager.PlaceIdentifier.BLACKSMITH;
+    }
+
+    @Override
+    public String parseSpeechInput(List<String> wordlist) {
+        return null;
+    }
+
+    @Override
+    public String getWelcomeMediaFile() {
+        return "welcomeMessages/location_marketplace.ogg";
     }
 //endregion
 //endregion
