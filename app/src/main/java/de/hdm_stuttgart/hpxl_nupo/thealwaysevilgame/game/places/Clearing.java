@@ -41,12 +41,13 @@ public class Clearing extends Place {
 
     @Override
     public List<String> parseSpeechInput(List<String> wordlist) {
+
         return null;
     }
 
     @Override
     public String getWelcomeMediaFile() {
-        return "welcomeMessages/location_clearing.ogg";
+        return "clearing/clearing_00.ogg";
     }
 //endregion
 
