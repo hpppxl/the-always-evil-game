@@ -200,8 +200,8 @@ public class GameActivity extends AppCompatActivity implements
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        mMediaPlayer.reset();
         if(!flushPlaybackQueue()){
-            mMediaPlayer.reset();
             performingSpeechSetup = true;
             speech.startListening(recognizerIntent);
             enableSpeakButton();

@@ -44,10 +44,10 @@ public class PlaceManager {
         }
     }
 
-    private static final String TOKEN_NORTH = LancasterStemmer.stem("north");
-    private static final String TOKEN_EAST = LancasterStemmer.stem("east");
-    private static final String TOKEN_SOUTH = LancasterStemmer.stem("south");
-    private static final String TOKEN_WEST = LancasterStemmer.stem("west");
+    public static final String TOKEN_NORTH = LancasterStemmer.stem("north");
+    public static final String TOKEN_EAST = LancasterStemmer.stem("east");
+    public static final String TOKEN_SOUTH = LancasterStemmer.stem("south");
+    public static final String TOKEN_WEST = LancasterStemmer.stem("west");
 
 //endregion
 
@@ -63,6 +63,11 @@ public class PlaceManager {
 //endregion
 
 //region Methods
+    public void setInventoryManager(InventoryManager inventoryManager){
+        for(PlaceIdentifier identifier : PlaceIdentifier.values()){
+            identifier.getPlace().setInventoryManager(inventoryManager);
+        }
+    }
     public List<String> parseSpeechInput(List<String> wordlist){
         List<String> returnList = new ArrayList<>();
         if(wordlist.contains(TOKEN_NORTH)){

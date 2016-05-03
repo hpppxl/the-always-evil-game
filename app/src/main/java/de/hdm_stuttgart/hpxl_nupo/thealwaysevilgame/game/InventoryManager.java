@@ -15,6 +15,10 @@ public class InventoryManager extends ArrayList<InventoryItem> {
 //endregion
 
 //region Constructors
+    public InventoryManager(){
+        // initially add sword
+        this.add(InventoryItem.SWORD);
+    }
 //endregion
 
 //region Methods
@@ -31,6 +35,7 @@ public class InventoryManager extends ArrayList<InventoryItem> {
         return soundList;
 
     }
+
 //endregion
 
 //region Inner Classes / Interfaces

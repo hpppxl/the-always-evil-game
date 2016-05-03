@@ -2,6 +2,7 @@ package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places;
 
 import java.util.List;
 
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.InventoryManager;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.Navigator;
 
 /**
@@ -12,6 +13,7 @@ public abstract class Place implements Navigator{
 //endregion
 
 //region Properties & Members
+    protected InventoryManager mInventoryManager;
 //endregion
 
 //region Constructors
@@ -21,6 +23,10 @@ public abstract class Place implements Navigator{
     public abstract List<String> parseSpeechInput(List<String> wordlist);
 
     public abstract String getWelcomeMediaFile();
+
+    public void setInventoryManager(InventoryManager inventoryManager){
+        this.mInventoryManager = inventoryManager;
+    }
 //endregion
 
 //region Inner Classes / Interfaces
