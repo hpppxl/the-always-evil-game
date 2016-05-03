@@ -137,12 +137,19 @@ public class GameActivity extends AppCompatActivity implements
         Log.i(LOG_TAG, "onResults");
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        String text = matches.get(0);
+        String allTexts = "";
+        for(String text:matches){
+            allTexts += text + " ";
+        }
 
-        List<String> list = LancasterStemmer.stemAll(StopWordFilter.filter(Tokenizer.tokenize(text)));
+        List<String> list = LancasterStemmer.stemAll(StopWordFilter.filter(Tokenizer.tokenize(allTexts)));
+        if(list.isEmpty()){
+            playRandomWhatSound();
+        }
         List<String> nextSoundFiles = mGame.parseSpeechInput(list);
 
         if(nextSoundFiles == null || nextSoundFiles.size() == 0){
+            // TODO change to "can't do that sounds"
             playRandomWhatSound();
         }else {
             mPlaybackQueue.addAll(nextSoundFiles);

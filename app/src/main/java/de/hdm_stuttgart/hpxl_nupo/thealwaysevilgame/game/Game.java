@@ -33,9 +33,15 @@ private PlaceManager placeManager = new PlaceManager();
             returnValue = placeManager.parseSpeechInput(wordList);
         }
         if (returnValue == null || returnValue.isEmpty()){
-
+            returnValue = parseGlobalFunctions(wordList);
         }
         return returnValue;
+    }
+    public List<String> parseGlobalFunctions(List<String> wordList){
+        if(wordList.contains(LIST_INVENTORY_TOKEN)){
+            return mInventoryManager.getInventorySoundList();
+        }
+        return null;
     }
 //endregion
 

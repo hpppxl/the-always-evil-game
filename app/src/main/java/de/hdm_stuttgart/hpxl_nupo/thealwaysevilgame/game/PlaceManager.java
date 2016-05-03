@@ -48,6 +48,7 @@ public class PlaceManager {
     public static final String TOKEN_EAST = LancasterStemmer.stem("east");
     public static final String TOKEN_SOUTH = LancasterStemmer.stem("south");
     public static final String TOKEN_WEST = LancasterStemmer.stem("west");
+    public static final String TOKEN_LOOK_AROUND = LancasterStemmer.stem("look");
 
 //endregion
 
