@@ -136,8 +136,13 @@ public class GameActivity extends AppCompatActivity implements
         String text = matches.get(0);
 
         List<String> list = LancasterStemmer.stemAll(StopWordFilter.filter(Tokenizer.tokenize(text)));
+        String nextSoundFile = mGame.parseSpeechInput(list);
 
-        playMediaFile(mGame.parseSpeechInput(list));
+        if(nextSoundFile == null){
+            playRandomWhatSound();
+        }else {
+            playMediaFile(nextSoundFile);
+        }
     }
 
     @Override

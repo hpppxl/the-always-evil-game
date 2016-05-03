@@ -33,7 +33,7 @@ private PlaceManager placeManager = new PlaceManager();
             returnValue = placeManager.parseSpeechInput(wordList);
         }
         if (returnValue == null){
-            returnValue = "village.ogg";
+
         }
         return returnValue;
     }
