@@ -39,7 +39,7 @@ public PlaceManager.PlaceIdentifier goNorth() {
     }
 
     @Override
-    public String parseSpeechInput(List<String> wordlist) {
+    public List<String> parseSpeechInput(List<String> wordlist) {
         return null;
     }
 

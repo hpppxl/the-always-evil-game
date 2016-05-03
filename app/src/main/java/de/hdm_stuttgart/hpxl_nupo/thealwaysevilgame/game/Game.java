@@ -26,8 +26,8 @@ private PlaceManager placeManager = new PlaceManager();
 //endregion
 
 //region Methods
-    public String parseSpeechInput(List<String> wordList){
-        String returnValue;
+    public List<String> parseSpeechInput(List<String> wordList){
+        List<String> returnValue;
         returnValue = placeManager.getCurrentPlace().parseSpeechInput(wordList);
         if (returnValue == null){
             returnValue = placeManager.parseSpeechInput(wordList);

@@ -1,5 +1,6 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
@@ -62,24 +63,25 @@ public class PlaceManager {
 //endregion
 
 //region Methods
-    public String parseSpeechInput(List<String> wordlist){
+    public List<String> parseSpeechInput(List<String> wordlist){
+        List<String> returnList = new ArrayList<>();
         if(wordlist.contains(TOKEN_NORTH)){
             goNorth();
-            return getCurrentPlace().getWelcomeMediaFile();
+            returnList.add(getCurrentPlace().getWelcomeMediaFile());
         }
         else if(wordlist.contains(TOKEN_EAST)){
             goEast();
-            return getCurrentPlace().getWelcomeMediaFile();
+            returnList.add( getCurrentPlace().getWelcomeMediaFile());
         }
         else if(wordlist.contains(TOKEN_SOUTH)){
             goSouth();
-            return getCurrentPlace().getWelcomeMediaFile();
+            returnList.add( getCurrentPlace().getWelcomeMediaFile());
         }
         else if(wordlist.contains(TOKEN_WEST)){
             goWest();
-            return getCurrentPlace().getWelcomeMediaFile();
+            returnList.add( getCurrentPlace().getWelcomeMediaFile());
         }
-        return null;
+        return returnList;
     }
     public PlaceIdentifier goNorth(){
         PlaceIdentifier newLocation = mCurrentPlace.getPlace().goNorth();

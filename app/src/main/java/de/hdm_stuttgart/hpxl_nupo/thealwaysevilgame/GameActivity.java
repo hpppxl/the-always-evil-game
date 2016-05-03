@@ -18,6 +18,8 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.Game;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
@@ -28,6 +30,7 @@ public class GameActivity extends AppCompatActivity implements
         RecognitionListener, MediaPlayer.OnCompletionListener{
 
     private static final String LOG_TAG = GameActivity.class.getSimpleName();
+    private static final int INITIAL_QUEUE_CAPACITY = 10;
     private TextView returnedText;
     private ImageButton speakButton;
     private boolean performingSpeechSetup = false;
@@ -36,6 +39,7 @@ public class GameActivity extends AppCompatActivity implements
     private Intent recognizerIntent;
     private MediaPlayer mMediaPlayer = new MediaPlayer();
     private Game mGame = new Game();
+    private Queue<String> mPlaybackQueue = new ArrayBlockingQueue<>(INITIAL_QUEUE_CAPACITY);
 
 
 
@@ -136,12 +140,13 @@ public class GameActivity extends AppCompatActivity implements
         String text = matches.get(0);
 
         List<String> list = LancasterStemmer.stemAll(StopWordFilter.filter(Tokenizer.tokenize(text)));
-        String nextSoundFile = mGame.parseSpeechInput(list);
+        List<String> nextSoundFiles = mGame.parseSpeechInput(list);
 
-        if(nextSoundFile == null){
+        if(nextSoundFiles == null || nextSoundFiles.size() == 0){
             playRandomWhatSound();
         }else {
-            playMediaFile(nextSoundFile);
+            mPlaybackQueue.addAll(nextSoundFiles);
+            flushPlaybackQueue();
         }
     }
 
@@ -149,6 +154,11 @@ public class GameActivity extends AppCompatActivity implements
     public void onRmsChanged(float rmsdB) {
         Log.i(LOG_TAG, "onRmsChanged: " + rmsdB);
         progressBar.setProgress((int) rmsdB);
+    }
+
+    private void playMediaFile(String fileName){
+        mPlaybackQueue.add(fileName);
+        flushPlaybackQueue();
     }
 
     public static String getErrorText(int errorCode) {
@@ -190,11 +200,12 @@ public class GameActivity extends AppCompatActivity implements
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        mMediaPlayer.reset();
-        performingSpeechSetup = true;
-        speech.startListening(recognizerIntent);
-        enableSpeakButton();
-
+        if(!flushPlaybackQueue()){
+            mMediaPlayer.reset();
+            performingSpeechSetup = true;
+            speech.startListening(recognizerIntent);
+            enableSpeakButton();
+        }
     }
 
     public void enableSpeakButton(){
@@ -204,19 +215,25 @@ public class GameActivity extends AppCompatActivity implements
         speakButton.setBackgroundResource(R.drawable.mic_background_inactive);
     }
 
-    public void playMediaFile(String filename){
+    public boolean flushPlaybackQueue(){
         try {
-            AssetFileDescriptor fileDescriptor = this.getAssets().openFd(filename);
-            mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
-            fileDescriptor.close();
-            mMediaPlayer.prepare();
-            mMediaPlayer.start();
+            String soundName = mPlaybackQueue.poll();
+            if(soundName != null) {
+                AssetFileDescriptor fileDescriptor = this.getAssets().openFd(soundName);
+                mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
+                fileDescriptor.close();
+                mMediaPlayer.prepare();
+                mMediaPlayer.start();
+                return true;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public void playRandomWhatSound(){
-        playMediaFile("globalSounds/what" + (int)((Math.random()*4)+1) + ".ogg");
+        mPlaybackQueue.add("globalSounds/what" + (int)((Math.random()*4)+1) + ".ogg");
+        flushPlaybackQueue();
     }
 }

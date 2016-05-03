@@ -18,7 +18,7 @@ public abstract class Place implements Navigator{
 //endregion
 
 //region Methods
-    public abstract String parseSpeechInput(List<String> wordlist);
+    public abstract List<String> parseSpeechInput(List<String> wordlist);
 
     public abstract String getWelcomeMediaFile();
 //endregion
