@@ -1,12 +1,13 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +27,7 @@ import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.StopWordFilter;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.Tokenizer;
 
-public class GameActivity extends AppCompatActivity implements
+public class GameActivity extends Activity implements
         RecognitionListener, MediaPlayer.OnCompletionListener{
 
     private static final String LOG_TAG = GameActivity.class.getSimpleName();
@@ -68,7 +69,12 @@ public class GameActivity extends AppCompatActivity implements
 
         mMediaPlayer.setOnCompletionListener(this);
 
-        playMediaFile("village.ogg");
+        if(BuildConfig.DEBUG) {
+            playRandomWhatSound();
+        }
+        else{
+            playMediaFile("clearing/clearing_00.ogg");
+        }
     }
 
 

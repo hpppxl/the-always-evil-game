@@ -11,7 +11,7 @@ import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.Countryside;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.MarketPlace;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.Place;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.Tavern;
-import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.TownHall;
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.Entrance;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.TravelingSalesman;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.VillageGate;
 
@@ -26,7 +26,7 @@ public class PlaceManager {
         CLEARING (new Clearing()),
         COUNTRYSIDE (new Countryside()),
         VILLAGE_GATE (new VillageGate()),
-        TOWN_HALL (new TownHall()),
+        ENTRANCE(new Entrance()),
         TAVERN (new Tavern()),
         CARPENTER (new Carpenter()),
         BLACKSMITH (new Blacksmith()),

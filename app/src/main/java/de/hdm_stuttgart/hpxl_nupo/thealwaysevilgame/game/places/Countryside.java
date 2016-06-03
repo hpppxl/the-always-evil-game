@@ -7,6 +7,7 @@ import java.util.List;
 
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.Game;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.InventoryItem;
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.InventoryManager;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.Navigator;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
@@ -17,11 +18,10 @@ import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
 public class Countryside extends Place{
 //region Constants
 private static final String LOG_TAG = Countryside.class.getSimpleName();
-public static final String TOKEN_SWORD = LancasterStemmer.stem("sword");
-    public static final String TOKEN_USE = LancasterStemmer.stem("use");
+
+
     public static final String TOKEN_DONKEY = LancasterStemmer.stem("donkey");
-    public static final String TOKEN_COIN = LancasterStemmer.stem("coin");
-    public static final String TOKEN_TAKE = LancasterStemmer.stem("take");
+
 //endregion
 
 //region Properties & Members
@@ -64,12 +64,11 @@ public static final String TOKEN_SWORD = LancasterStemmer.stem("sword");
         if(wordlist.contains(PlaceManager.TOKEN_LOOK_AROUND)){
             soundList.add(getWelcomeMediaFile());
         } else if(wordlist.contains(PlaceManager.TOKEN_WEST)|| wordlist.contains(PlaceManager.TOKEN_SOUTH)|| wordlist.contains(PlaceManager.TOKEN_EAST)) {
-            // TODO donkey_06.ogg
-            soundList.add("clearing/clearing_02.ogg");
-        } else if(wordlist.contains(TOKEN_USE) && wordlist.contains(TOKEN_SWORD) && wordlist.contains(TOKEN_DONKEY)){
+            soundList.add("clearing/countryside_06.ogg");
+        } else if(wordlist.contains(wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_SWORD) && wordlist.contains(TOKEN_DONKEY)) || (wordlist.contains(Game.TOKEN_KILL) && wordlist.contains(TOKEN_DONKEY))){
             donkeyAlive = false;
             soundList.add("countryside/countryside_04.ogg");
-        } else if(wordlist.contains(TOKEN_TAKE) && wordlist.contains(TOKEN_COIN) && !donkeyAlive && !coinTaken){
+        } else if(wordlist.contains(Game.TOKEN_TAKE) && wordlist.contains(InventoryManager.TOKEN_COIN) && !donkeyAlive && !coinTaken){
             coinTaken = true;
             mInventoryManager.add(InventoryItem.GOLDEN_COIN);
             soundList.add("countryside/countryside_05.ogg");

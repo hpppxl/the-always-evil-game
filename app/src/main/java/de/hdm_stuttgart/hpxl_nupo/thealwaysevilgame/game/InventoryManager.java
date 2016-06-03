@@ -1,14 +1,21 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
 
 /**
  * Created by nerd on 03/05/16.
  */
 public class InventoryManager extends ArrayList<InventoryItem> {
 //region Constants
+public static final String TOKEN_COIN = LancasterStemmer.stem("coin");
+    public static final String TOKEN_SWORD = LancasterStemmer.stem("sword");
+    public static final String TOKEN_TORCH = LancasterStemmer.stem("torch");
+    public static final String TOKEN_COAL = LancasterStemmer.stem("coal");
+    public static final String TOKEN_POISON = LancasterStemmer.stem("poison");
+    public static final String TOKEN_COKE = LancasterStemmer.stem("coke");
 //endregion
 
 //region Properties & Members
@@ -18,6 +25,9 @@ public class InventoryManager extends ArrayList<InventoryItem> {
     public InventoryManager(){
         // initially add sword
         this.add(InventoryItem.SWORD);
+        // TODO: remove debug items from iventory:
+        //this.add(InventoryItem.BURNING_COAL);
+        //this.add(InventoryItem.UNLIT_TORCH);
     }
 //endregion
 
@@ -25,7 +35,7 @@ public class InventoryManager extends ArrayList<InventoryItem> {
     public List<String> getInventorySoundList(){
         List <String> soundList = new ArrayList<>(this.size() + 1);
 
-        soundList.add("globalSounds/inventoryStartMessage.ogg");
+        soundList.add("inventory_items/inventoryStartMessage.ogg");
 
         for(InventoryItem item : this){
             soundList.add(item.getSound());

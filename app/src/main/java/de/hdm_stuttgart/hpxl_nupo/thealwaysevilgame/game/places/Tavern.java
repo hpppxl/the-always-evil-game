@@ -35,7 +35,7 @@ public class Tavern extends Place{
 
     @Override
     public PlaceManager.PlaceIdentifier goWest() {
-        return PlaceManager.PlaceIdentifier.TOWN_HALL;
+        return PlaceManager.PlaceIdentifier.ENTRANCE;
     }
 
     @Override

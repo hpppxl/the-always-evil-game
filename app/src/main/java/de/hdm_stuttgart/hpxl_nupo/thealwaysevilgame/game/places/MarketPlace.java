@@ -30,7 +30,7 @@ public class MarketPlace extends Place{
 
     @Override
     public PlaceManager.PlaceIdentifier goSouth() {
-        return PlaceManager.PlaceIdentifier.TOWN_HALL;
+        return PlaceManager.PlaceIdentifier.ENTRANCE;
     }
 
     @Override

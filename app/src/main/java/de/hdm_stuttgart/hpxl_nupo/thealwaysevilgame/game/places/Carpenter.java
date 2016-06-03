@@ -25,7 +25,7 @@ public class Carpenter extends Place{
     }
     @Override
     public PlaceManager.PlaceIdentifier goEast() {
-        return PlaceManager.PlaceIdentifier.TOWN_HALL;
+        return PlaceManager.PlaceIdentifier.ENTRANCE;
     }
 
     @Override
