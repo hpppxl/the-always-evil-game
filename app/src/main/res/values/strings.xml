@@ -19,5 +19,7 @@
     <string name="item_goldenCoin">Golden Coin</string>
     <string name="item_sword">Sword</string>
     <string name="btn_newGame">New Game</string>
+    <string name="btn_map">Map</string>
     <string name="btn_about">About</string>
+    <string name="level1_name">The Village</string>
 </resources>
