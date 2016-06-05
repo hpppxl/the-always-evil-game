@@ -7,7 +7,17 @@ import android.view.View;
 import android.widget.Button;
 
 public class MenuActivity extends Activity {
+    //region Constants
+    //endregion
 
+    //region Properties & Members
+    //endregion
+
+    //region Constructors
+
+    //endregion
+
+    //region Methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,4 +42,8 @@ public class MenuActivity extends Activity {
             }
         });
     }
+    //endregion
+
+    //region Inner Classes / Interfaces
+    //endregion
 }

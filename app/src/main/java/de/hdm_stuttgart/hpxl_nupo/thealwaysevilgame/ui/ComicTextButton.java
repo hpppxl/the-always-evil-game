@@ -13,6 +13,14 @@ public class ComicTextButton extends Button {
     private static final String COMIC_TYPEFACE_NAME = "fonts/komika_axis.ttf";
 
 
+    //region Constants
+    private static final String COMIC_TYPEFACE_NAME = "fonts/komika_axis.ttf";
+    //endregion
+
+    //region Properties & Members
+    //endregion
+
+    //region Constructors
     public ComicTextButton(Context context) {
         super(context);
         setUpFont();
@@ -27,9 +35,15 @@ public class ComicTextButton extends Button {
         super(context, attrs, defStyleAttr);
         setUpFont();
     }
+    //endregion
 
+    //region Methods
     private void setUpFont(){
         Typeface comicFace = Typeface.createFromAsset(this.getContext().getAssets(), COMIC_TYPEFACE_NAME);
         this.setTypeface(comicFace);
     }
+    //endregion
+
+    //region Inner Classes / Interfaces
+    //endregion
 }
