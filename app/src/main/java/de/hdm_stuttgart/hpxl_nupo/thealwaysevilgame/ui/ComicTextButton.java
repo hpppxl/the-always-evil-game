@@ -10,8 +10,6 @@ import android.widget.TextView;
  * Created by daniel on 05/06/16.
  */
 public class ComicTextButton extends Button {
-    private static final String COMIC_TYPEFACE_NAME = "fonts/komika_axis.ttf";
-
 
     //region Constants
     private static final String COMIC_TYPEFACE_NAME = "fonts/komika_axis.ttf";
