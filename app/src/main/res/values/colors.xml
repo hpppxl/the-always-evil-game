@@ -10,4 +10,6 @@
     <color name="colorItem3">#3E99DA</color>
     <color name="colorItem4">#EFC52C</color>
     <color name="colorLocation">#EDF1F2</color>
+    <color name="colorLogoBackground">#EDB405</color>
+    <color name="colorButton">#FFFC19</color>
 </resources>
