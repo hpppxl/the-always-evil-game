@@ -16,7 +16,7 @@ import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
  */
 public class Entrance extends Place {
     //region Constants
-    private static final String LOG_TAG = VillageGate.class.getSimpleName();
+    private static final String LOG_TAG = Entrance.class.getSimpleName();
     public static final String TOKEN_HAYSTACK = LancasterStemmer.stem("haystack");
     public static final String TOKEN_FIRE = LancasterStemmer.stem("fire");
 //endregion
@@ -61,9 +61,16 @@ public PlaceManager.PlaceIdentifier goNorth() {
             soundList.add("countryside/countryside_06.ogg");
         } else if(((wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_TORCH)) || wordlist.contains(Game.TOKEN_LIGHT) || wordlist.contains(TOKEN_FIRE) ) && wordlist.contains(TOKEN_HAYSTACK) && mInventoryManager.contains(InventoryItem.UNLIT_TORCH)) {
             soundList.add("entrance/entrance_02.ogg");
+        } else if(((wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_TORCH)) || wordlist.contains(Game.TOKEN_LIGHT) || wordlist.contains(TOKEN_FIRE) ) && wordlist.contains(TOKEN_HAYSTACK) && mInventoryManager.contains(InventoryItem.BURNING_COAL)) {
+            // TODO: sound that you try to light the torch but accidentally light the haystack
+            soundList.add("entrance/entrance_03.ogg");
         }
         else if(((wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_TORCH)) || wordlist.contains(Game.TOKEN_LIGHT) || wordlist.contains(TOKEN_FIRE) ) && wordlist.contains(TOKEN_HAYSTACK) && mInventoryManager.contains(InventoryItem.BURNING_TORCH)) {
             soundList.add("entrance/entrance_03.ogg");
+        } else if((wordlist.contains(Game.TOKEN_TAKE) && wordlist.contains(InventoryManager.TOKEN_TORCH)) && !mInventoryManager.contains(InventoryItem.UNLIT_TORCH)) {
+            mInventoryManager.add(InventoryItem.UNLIT_TORCH);
+            // TODO: add take torch sound
+            //soundList.add("entrance/entrance_04.ogg");
         }
         return soundList;
     }

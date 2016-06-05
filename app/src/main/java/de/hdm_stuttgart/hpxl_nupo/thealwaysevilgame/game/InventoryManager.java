@@ -16,6 +16,7 @@ public static final String TOKEN_COIN = LancasterStemmer.stem("coin");
     public static final String TOKEN_COAL = LancasterStemmer.stem("coal");
     public static final String TOKEN_POISON = LancasterStemmer.stem("poison");
     public static final String TOKEN_COKE = LancasterStemmer.stem("coke");
+    public static final String TOKEN_BUCKET = LancasterStemmer.stem("bucket");
 //endregion
 
 //region Properties & Members
@@ -28,6 +29,7 @@ public static final String TOKEN_COIN = LancasterStemmer.stem("coin");
         // TODO: remove debug items from iventory:
         //this.add(InventoryItem.BURNING_COAL);
         //this.add(InventoryItem.UNLIT_TORCH);
+        //this.add(InventoryItem.GOLDEN_COIN);
     }
 //endregion
 

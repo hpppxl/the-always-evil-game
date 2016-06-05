@@ -15,7 +15,10 @@ import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.Entrance;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.TravelingSalesman;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places.VillageGate;
 
+import static de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager.PlaceIdentifier.BLACKSMITH;
 import static de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager.PlaceIdentifier.CLEARING;
+import static de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager.PlaceIdentifier.ENTRANCE;
+import static de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager.PlaceIdentifier.TRAVLING_SALESMAN;
 
 /**
  * Created by nerd on 26/04/16.
@@ -57,7 +60,8 @@ public class PlaceManager {
     }
 
     //region Properties & Members
-    private PlaceIdentifier mCurrentPlace = CLEARING;
+    // TODO: reset to entrance
+    private PlaceIdentifier mCurrentPlace = ENTRANCE;
 //endregion
 
 //region Constructors

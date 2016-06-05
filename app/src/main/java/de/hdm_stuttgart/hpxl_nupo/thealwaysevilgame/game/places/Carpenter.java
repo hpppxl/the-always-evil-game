@@ -1,17 +1,28 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.places;
 
+import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.Game;
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.InventoryItem;
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.InventoryManager;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager;
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
 
 /**
  * Created by nerd on 26/04/16.
  */
 public class Carpenter extends Place{
-//region Constants
+
+    //region Constants
+    private static final String LOG_TAG = Carpenter.class.getSimpleName();
 //endregion
 
-//region Properties & Members
+    //region Properties & Members
+    private boolean burnedDown = false;
+
 //endregion
 
 //region Constructors
@@ -40,12 +51,28 @@ public class Carpenter extends Place{
 
     @Override
     public List<String> parseSpeechInput(List<String> wordlist) {
-        return null;
+        List<String> soundList = new ArrayList<>();
+        for(String word : wordlist) {
+            Log.d(LOG_TAG, word);
+        }
+        // catch iventory command
+        if(wordlist.contains(PlaceManager.TOKEN_LOOK_AROUND)){
+            soundList.add(getWelcomeMediaFile());
+        }
+        return soundList;
     }
 
     @Override
     public String getWelcomeMediaFile() {
-        return "welcomeMessages/location_carpenter.ogg";
+        if(!burnedDown && !mInventoryManager.contains(InventoryItem.BURNING_TORCH)) {
+            return "carpenter/carpenter_00.ogg";
+        } else if(!burnedDown && mInventoryManager.contains(InventoryItem.BURNING_TORCH)) {
+            burnedDown = true;
+            return "carpenter/carpenter_01.ogg";
+        } else{
+            return "carpenter/carpenter_02.ogg";
+        }
+
     }
 //endregion
 //endregion
