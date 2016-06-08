@@ -7,3 +7,4 @@
 /build
 /captures
 /_site
+/.sass-cache/*
