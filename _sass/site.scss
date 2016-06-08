@@ -220,3 +220,32 @@ header .entry-meta {
         background-position: center center;
     }
 }
+
+.avatar-container{
+	margin: 20px;
+	margin-top: 0;
+	background-color: white;
+	border-radius: 12px;
+	height: 138px;
+	width: 138px;
+	float: left;
+}
+.avatar{
+	border-radius: 8px;
+	border: 0;
+	margin-top: 4px;
+	margin-left: 4px;
+}
+.author{
+	clear: both;
+}
+.author h2{
+	margin-top: 1.5em;
+}
+.thanks{
+	font-size: 0.8em;
+	clear: both;
+}
+.attributions{
+	font-size: 0.7em;
+}
