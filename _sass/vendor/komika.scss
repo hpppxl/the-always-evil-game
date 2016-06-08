@@ -1,13 +1,12 @@
-$komika-font-path: "../fonts/" !default;
-$komika-font-name: "KOMIKAX_-webfont";
+$komika-font-name: "../fonts/KOMIKAX_-webfont";
 
 @font-face {
     font-family: 'Komika';
-    src: url('#{$komika-font-path}#{$komika-font-name}.eot');
-    src: url('#{$komika-font-path}#{$komika-font-name}.eot?#iefix') format('embedded-opentype'),
-         url('#{$komika-font-path}#{$komika-font-name}.woff') format('woff'),
-         url('#{$komika-font-path}#{$komika-font-name}.ttf') format('truetype'),
-         url('#{$komika-font-path}#{$komika-font-name}.svg#komika_axisregular') format('svg');
+    src: url('#{$komika-font-name}.eot');
+    src: url('#{$komika-font-name}.eot?#iefix') format('embedded-opentype'),
+         url('#{$komika-font-name}.woff') format('woff'),
+         url('#{$komika-font-name}.ttf') format('truetype'),
+         url('#{$komika-font-name}.svg#komika_axisregular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
