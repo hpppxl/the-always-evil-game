@@ -10,8 +10,8 @@ import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
  */
 public class Game {
 
-//region Constants
-private static final String LOG_TAG = Game.class.getSimpleName();
+    //region Constants
+    private static final String LOG_TAG = Game.class.getSimpleName();
     public static final String LIST_INVENTORY_TOKEN = LancasterStemmer.stem("inventory");
     public static final String TOKEN_USE = LancasterStemmer.stem("use");
     public static final String TOKEN_TAKE = LancasterStemmer.stem("take");
@@ -22,20 +22,20 @@ private static final String LOG_TAG = Game.class.getSimpleName();
     public static final String TOKEN_KILL = LancasterStemmer.stem("kill");
     public static final String TOKEN_LIGHT = LancasterStemmer.stem("light");
     public static final String TOKEN_BUY = LancasterStemmer.stem("buy");
-//endregion
+    //endregion
 
-//region Properties & Members
-private final InventoryManager mInventoryManager = new InventoryManager();
-private PlaceManager placeManager = new PlaceManager();
-//endregion
+    //region Properties & Members
+    private final InventoryManager mInventoryManager = new InventoryManager();
+    private PlaceManager placeManager = new PlaceManager();
+    //endregion
 
-//region Constructors
+    //region Constructors
     public Game(){
         placeManager.setInventoryManager(mInventoryManager);
     }
-//endregion
+    //endregion
 
-//region Methods
+    //region Methods
     public List<String> parseSpeechInput(List<String> wordList){
         List<String> returnValue;
         returnValue = placeManager.getCurrentPlace().parseSpeechInput(wordList);
@@ -47,6 +47,7 @@ private PlaceManager placeManager = new PlaceManager();
         }
         return returnValue;
     }
+
     public List<String> parseGlobalFunctions(List<String> wordList){
         if(wordList.contains(LIST_INVENTORY_TOKEN)){
             return mInventoryManager.getInventorySoundList();
@@ -60,9 +61,17 @@ private PlaceManager placeManager = new PlaceManager();
         }
         return null;
     }
-//endregion
 
-//region Inner Classes / Interfaces
-//endregion
+    public InventoryManager getInventoryManager() {
+        return mInventoryManager;
+    }
+
+    public PlaceManager getPlaceManager() {
+        return placeManager;
+    }
+    //endregion
+
+    //region Inner Classes / Interfaces
+    //endregion
 
 }
