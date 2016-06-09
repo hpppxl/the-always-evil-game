@@ -48,6 +48,16 @@ public static final String TOKEN_COIN = LancasterStemmer.stem("coin");
 
     }
 
+    public List<String> getItemList(){
+        List<String> inventoryItems = new ArrayList<>(this.size());
+
+        for(InventoryItem item : this){
+            inventoryItems.add(item.name());
+        }
+
+        return inventoryItems;
+    }
+
 //endregion
 
 //region Inner Classes / Interfaces

@@ -26,12 +26,10 @@ public class Entrance extends Place {
 //region Constructors
 //endregion
 
-//region Methods
-//region Methods
-@Override
-public PlaceManager.PlaceIdentifier goNorth() {
-    return PlaceManager.PlaceIdentifier.MARKET_PLACE;
-}
+    //region Methods
+    @Override
+    public PlaceManager.PlaceIdentifier goNorth() { return PlaceManager.PlaceIdentifier.MARKET_PLACE; }
+
     @Override
     public PlaceManager.PlaceIdentifier goEast() {
         return PlaceManager.PlaceIdentifier.TAVERN;
@@ -50,9 +48,6 @@ public PlaceManager.PlaceIdentifier goNorth() {
     @Override
     public List<String> parseSpeechInput(List<String> wordlist) {
         List<String> soundList = new ArrayList<>();
-        for(String word : wordlist) {
-            Log.d(LOG_TAG, word);
-        }
         // catch iventory command
         if(wordlist.contains(PlaceManager.TOKEN_LOOK_AROUND)){
             soundList.add(getWelcomeMediaFile());

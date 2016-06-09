@@ -125,6 +125,10 @@ public class PlaceManager {
         }
         return null;
     }
+
+    public String getLocationName(){
+        return mCurrentPlace.name();
+    }
 //endregion
 
 //region Inner Classes / Interfaces

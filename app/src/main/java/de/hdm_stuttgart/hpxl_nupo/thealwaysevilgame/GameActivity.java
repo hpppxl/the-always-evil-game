@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,6 +23,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.feedback.FeedbackAgent;
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.feedback.FeedbackMessage;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.Game;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.StopWordFilter;
@@ -43,6 +44,7 @@ public class GameActivity extends Activity implements
     private MediaPlayer mMediaPlayer = new MediaPlayer();
     private Game mGame = new Game();
     private Queue<String> mPlaybackQueue = new ArrayBlockingQueue<>(INITIAL_QUEUE_CAPACITY);
+    private FeedbackAgent mFeedbackAgent = new FeedbackAgent();
 
 
     @Override
@@ -146,19 +148,37 @@ public class GameActivity extends Activity implements
 
     @Override
     public void onResults(Bundle results) {
+
+        FeedbackMessage feedback = new FeedbackMessage(getApplicationContext());
         Log.i(LOG_TAG, "onResults");
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+        feedback.setRecognizedSentences(matches);
+
         String allTexts = "";
         for (String text : matches) {
             allTexts += text + " ";
         }
 
         List<String> list = LancasterStemmer.stemAll(StopWordFilter.filter(Tokenizer.tokenize(allTexts)));
+        feedback.setStemmedWords(list);
+
         if (list.isEmpty()) {
             playRandomWhatSound();
+            mFeedbackAgent.send(feedback);
+            return;
         }
+
+        feedback.setLocationBefore(mGame.getPlaceManager().getLocationName());
+        feedback.setInventoryBefore(mGame.getInventoryManager().getItemList());
+
         List<String> nextSoundFiles = mGame.parseSpeechInput(list);
+        feedback.setPlaybackQueue(nextSoundFiles);
+
+        feedback.setLocationAfter(mGame.getPlaceManager().getLocationName());
+        feedback.setmInventoryAfter(mGame.getInventoryManager().getItemList());
+
+        mFeedbackAgent.send(feedback);
 
         if (nextSoundFiles == null || nextSoundFiles.size() == 0) {
             // TODO change to "can't do that sounds"
