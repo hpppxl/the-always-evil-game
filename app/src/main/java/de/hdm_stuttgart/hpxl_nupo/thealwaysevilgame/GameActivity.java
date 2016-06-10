@@ -1,7 +1,9 @@
 package de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.speech.RecognitionListener;
@@ -9,6 +11,8 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -30,26 +34,27 @@ import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.StopWordFilter;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.Tokenizer;
 
-public class GameActivity extends Activity implements
+public class GameActivity extends AppCompatActivity implements
         RecognitionListener, MediaPlayer.OnCompletionListener {
 
     private static final String LOG_TAG = GameActivity.class.getSimpleName();
     private static final int INITIAL_QUEUE_CAPACITY = 10;
+    private static final int PERMISSION_REQUEST_CODE = 0x01;
+
     private TextView returnedText;
     private ImageButton speakButton;
     private boolean performingSpeechSetup = false;
-    private ProgressBar progressBar;
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
     private MediaPlayer mMediaPlayer = new MediaPlayer();
     private Game mGame = new Game();
     private Queue<String> mPlaybackQueue = new ArrayBlockingQueue<>(INITIAL_QUEUE_CAPACITY);
     private FeedbackAgent mFeedbackAgent = new FeedbackAgent();
+    private boolean mGameShouldEnd = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -57,12 +62,11 @@ public class GameActivity extends Activity implements
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
+
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         returnedText = (TextView) findViewById(R.id.textView1);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         speakButton = (ImageButton) findViewById(R.id.speakButton);
-
-        progressBar.setVisibility(View.INVISIBLE);
         speech = SpeechRecognizer.createSpeechRecognizer(this);
         speech.setRecognitionListener(this);
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -76,13 +80,31 @@ public class GameActivity extends Activity implements
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 4000);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 4000);
 
-
         mMediaPlayer.setOnCompletionListener(this);
 
-        if (BuildConfig.DEBUG) {
-            playRandomWhatSound();
-        } else {
-            playMediaFile("clearing/clearing_00.ogg");
+        //checking for record audio permission
+        int permissionStatus = getApplicationContext().checkSelfPermission(Manifest.permission.RECORD_AUDIO);
+        if(permissionStatus != PackageManager.PERMISSION_GRANTED){
+            Log.i(LOG_TAG, "permission for record audio denied initially");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, PERMISSION_REQUEST_CODE);
+        }else{
+            //we already have the permission
+            startGame();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        if(requestCode == PERMISSION_REQUEST_CODE){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                startGame();
+            }else{
+                //too bad, inform the user
+                //TODO: replace with right sound
+                mGameShouldEnd = true;
+                playMediaFile("clearing/clearing_01.ogg");
+            }
         }
     }
 
@@ -105,8 +127,6 @@ public class GameActivity extends Activity implements
     @Override
     public void onBeginningOfSpeech() {
         Log.i(LOG_TAG, "onBeginningOfSpeech");
-        progressBar.setIndeterminate(false);
-        progressBar.setMax(10);
     }
 
     @Override
@@ -117,7 +137,6 @@ public class GameActivity extends Activity implements
     @Override
     public void onEndOfSpeech() {
         Log.i(LOG_TAG, "onEndOfSpeech");
-        progressBar.setIndeterminate(true);
         disableSpeakButton();
     }
 
@@ -192,7 +211,6 @@ public class GameActivity extends Activity implements
     @Override
     public void onRmsChanged(float rmsdB) {
         Log.i(LOG_TAG, "onRmsChanged: " + rmsdB);
-        progressBar.setProgress((int) rmsdB);
     }
 
     private void playMediaFile(String fileName) {
@@ -241,9 +259,14 @@ public class GameActivity extends Activity implements
     public void onCompletion(MediaPlayer mp) {
         mMediaPlayer.reset();
         if (!flushPlaybackQueue()) {
-            performingSpeechSetup = true;
-            speech.startListening(recognizerIntent);
-            enableSpeakButton();
+            if(mGameShouldEnd){
+                //the game has ended due to a user action
+                this.finish();
+            }else {
+                performingSpeechSetup = true;
+                speech.startListening(recognizerIntent);
+                enableSpeakButton();
+            }
         }
     }
 
@@ -275,5 +298,9 @@ public class GameActivity extends Activity implements
     public void playRandomWhatSound() {
         mPlaybackQueue.add("globalSounds/what" + (int) ((Math.random() * 4) + 1) + ".ogg");
         flushPlaybackQueue();
+    }
+
+    public void startGame(){
+        playMediaFile("clearing/clearing_00.ogg");
     }
 }
