@@ -44,7 +44,6 @@ public class GameActivity extends AppCompatActivity implements
     private TextView returnedText;
     private ImageButton speakButton;
     private boolean performingSpeechSetup = false;
-    private ProgressBar progressBar;
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
     private MediaPlayer mMediaPlayer = new MediaPlayer();
@@ -66,10 +65,7 @@ public class GameActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         returnedText = (TextView) findViewById(R.id.textView1);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         speakButton = (ImageButton) findViewById(R.id.speakButton);
-
-        progressBar.setVisibility(View.INVISIBLE);
         speech = SpeechRecognizer.createSpeechRecognizer(this);
         speech.setRecognitionListener(this);
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -127,8 +123,6 @@ public class GameActivity extends AppCompatActivity implements
     @Override
     public void onBeginningOfSpeech() {
         Log.i(LOG_TAG, "onBeginningOfSpeech");
-        progressBar.setIndeterminate(false);
-        progressBar.setMax(10);
     }
 
     @Override
@@ -139,7 +133,6 @@ public class GameActivity extends AppCompatActivity implements
     @Override
     public void onEndOfSpeech() {
         Log.i(LOG_TAG, "onEndOfSpeech");
-        progressBar.setIndeterminate(true);
         disableSpeakButton();
     }
 
@@ -214,7 +207,6 @@ public class GameActivity extends AppCompatActivity implements
     @Override
     public void onRmsChanged(float rmsdB) {
         Log.i(LOG_TAG, "onRmsChanged: " + rmsdB);
-        progressBar.setProgress((int) rmsdB);
     }
 
     private void playMediaFile(String fileName) {
