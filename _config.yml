@@ -60,8 +60,8 @@ github:             hpppxl/the-always-evil-game
 #hackernews:        username
 
 # Gems
-gems:
-  - jekyll-gist
+#gems:
+#  - jekyll-gist
 
 # Exclude list
 exclude: [README.md, Gemfile, Gemfile.lock, node_modules, gulpfile.js, package.json, _site, src, vendor, CNAME, LICENSE, Rakefile]
