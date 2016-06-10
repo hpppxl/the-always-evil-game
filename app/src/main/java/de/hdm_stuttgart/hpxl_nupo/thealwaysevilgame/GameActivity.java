@@ -50,6 +50,7 @@ public class GameActivity extends AppCompatActivity implements
     private Game mGame = new Game();
     private Queue<String> mPlaybackQueue = new ArrayBlockingQueue<>(INITIAL_QUEUE_CAPACITY);
     private FeedbackAgent mFeedbackAgent = new FeedbackAgent();
+    private boolean mGameShouldEnd = false;
 
 
     @Override
@@ -100,6 +101,9 @@ public class GameActivity extends AppCompatActivity implements
                 startGame();
             }else{
                 //too bad, inform the user
+                //TODO: replace with right sound
+                mGameShouldEnd = true;
+                playMediaFile("clearing/clearing_01.ogg");
             }
         }
     }
@@ -255,9 +259,14 @@ public class GameActivity extends AppCompatActivity implements
     public void onCompletion(MediaPlayer mp) {
         mMediaPlayer.reset();
         if (!flushPlaybackQueue()) {
-            performingSpeechSetup = true;
-            speech.startListening(recognizerIntent);
-            enableSpeakButton();
+            if(mGameShouldEnd){
+                //the game has ended due to a user action
+                this.finish();
+            }else {
+                performingSpeechSetup = true;
+                speech.startListening(recognizerIntent);
+                enableSpeakButton();
+            }
         }
     }
 
