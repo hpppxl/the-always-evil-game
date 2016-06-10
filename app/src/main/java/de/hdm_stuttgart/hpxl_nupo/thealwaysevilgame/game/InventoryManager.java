@@ -26,10 +26,6 @@ public static final String TOKEN_COIN = LancasterStemmer.stem("coin");
     public InventoryManager(){
         // initially add sword
         this.add(InventoryItem.SWORD);
-        // TODO: remove debug items from iventory:
-        //this.add(InventoryItem.BURNING_COAL);
-        //this.add(InventoryItem.UNLIT_TORCH);
-        //this.add(InventoryItem.GOLDEN_COIN);
     }
 //endregion
 

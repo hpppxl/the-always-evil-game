@@ -67,18 +67,25 @@ public class Blacksmith extends Place {
         } else if (((wordlist.contains(Game.TOKEN_KILL) && wordlist.contains(TOKEN_BLACKSMITH)) || (wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_SWORD) && wordlist.contains(TOKEN_BLACKSMITH))) && blacksmithAlive) {
             blacksmithAlive = false;
             soundList.add("blacksmith/blacksmith_06.ogg");
+        }else if (((wordlist.contains(Game.TOKEN_KILL) && wordlist.contains(TOKEN_BLACKSMITH)) || (wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_SWORD) && wordlist.contains(TOKEN_BLACKSMITH))) && !blacksmithAlive) {
+            soundList.add(Game.getRandomAlreadyDidThatMonsterSound());
         } else if (wordlist.contains(Game.TOKEN_TAKE) && wordlist.contains(InventoryManager.TOKEN_BUCKET) && blacksmithAlive && !mInventoryManager.contains(InventoryItem.BUCKET)) {
             mInventoryManager.add(InventoryItem.BUCKET);
             blacksmithAlive = false;
             soundList.add("blacksmith/blacksmith_07.ogg");
-            // TODO: DUN-DIN DUN-DUN
+            soundList.add("globalSounds/start_listening.ogg");
+            soundList.add("globalSounds/no_input.ogg");
             soundList.add("blacksmith/blacksmith_08.ogg");
         } else if (wordlist.contains(Game.TOKEN_TAKE) && wordlist.contains(InventoryManager.TOKEN_BUCKET) && !blacksmithAlive && !mInventoryManager.contains(InventoryItem.BUCKET)) {
             mInventoryManager.add(InventoryItem.BUCKET);
             soundList.add("blacksmith/blacksmith_09.ogg");
+        } else if (wordlist.contains(Game.TOKEN_TAKE) && wordlist.contains(InventoryManager.TOKEN_BUCKET) && !blacksmithAlive && mInventoryManager.contains(InventoryItem.BUCKET)) {
+            soundList.add(Game.getRandomAlreadyDidThatSound());
         } else if (wordlist.contains(Game.TOKEN_TAKE) && wordlist.contains(InventoryManager.TOKEN_COAL) && !mInventoryManager.contains(InventoryItem.BURNING_COAL)) {
             mInventoryManager.add(InventoryItem.BURNING_COAL);
             soundList.add("blacksmith/blacksmith_10.ogg");
+        }else if (wordlist.contains(Game.TOKEN_TAKE) && wordlist.contains(InventoryManager.TOKEN_COAL) && mInventoryManager.contains(InventoryItem.BURNING_COAL)) {
+            soundList.add(Game.getRandomAlreadyDidThatSound());
         }
         return soundList;
     }
@@ -92,11 +99,11 @@ public class Blacksmith extends Place {
         } else if (!mInventoryManager.contains(InventoryItem.BURNING_COAL) && mInventoryManager.contains(InventoryItem.BUCKET) && !blacksmithAlive) {
             return "blacksmith/blacksmith_02.ogg";
         } else if (!mInventoryManager.contains(InventoryItem.BURNING_COAL) && !mInventoryManager.contains(InventoryItem.BUCKET) && !blacksmithAlive) {
-            // TODO: no bucket, no coal and dead blacksmith sound
-            return "blacksmith/blacksmith_02.ogg";
-        }
-        else if (mInventoryManager.contains(InventoryItem.BURNING_COAL) && mInventoryManager.contains(InventoryItem.BUCKET) && !blacksmithAlive) {
+            return "blacksmith/blacksmith_12.ogg";
+        } else if (mInventoryManager.contains(InventoryItem.BURNING_COAL) && mInventoryManager.contains(InventoryItem.BUCKET) && !blacksmithAlive) {
             return "blacksmith/blacksmith_03.ogg";
+        } else if (mInventoryManager.contains(InventoryItem.BURNING_COAL) && !mInventoryManager.contains(InventoryItem.BUCKET) && !blacksmithAlive) {
+            return "blacksmith/blacksmith_11.ogg";
         } else {
             throw new RuntimeException("blacksmith missing state");
         }

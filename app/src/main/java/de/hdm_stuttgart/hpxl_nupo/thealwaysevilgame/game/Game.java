@@ -22,6 +22,8 @@ public class Game {
     public static final String TOKEN_KILL = LancasterStemmer.stem("kill");
     public static final String TOKEN_LIGHT = LancasterStemmer.stem("light");
     public static final String TOKEN_BUY = LancasterStemmer.stem("buy");
+    public static final String TOKEN_MYSELF = LancasterStemmer.stem("myself");
+    public static final String TOKEN_SUICIDE = LancasterStemmer.stem("suicide");
     //endregion
 
     //region Properties & Members
@@ -45,21 +47,26 @@ public class Game {
         if (returnValue == null || returnValue.isEmpty()){
             returnValue = parseGlobalFunctions(wordList);
         }
+        if (returnValue == null || returnValue.isEmpty()){
+            returnValue = new ArrayList<>(1);
+            returnValue.add(getRandomCantDoThatSound());
+        }
         return returnValue;
     }
 
     public List<String> parseGlobalFunctions(List<String> wordList){
-        if(wordList.contains(LIST_INVENTORY_TOKEN)){
+        List<String> returnValue = new ArrayList<>();
+        if(wordList.contains(LIST_INVENTORY_TOKEN)) {
             return mInventoryManager.getInventorySoundList();
-        } else if((wordList.contains(TOKEN_USE) ||wordList.contains(TOKEN_LIGHT) ) && wordList.contains(mInventoryManager.TOKEN_TORCH) && wordList.contains(mInventoryManager.TOKEN_COAL) && mInventoryManager.contains(InventoryItem.BURNING_COAL) && mInventoryManager.contains(InventoryItem.UNLIT_TORCH)){
+        }else if(((wordList.contains(Game.TOKEN_KILL) && wordList.contains(TOKEN_MYSELF)) || (wordList.contains(Game.TOKEN_USE) && wordList.contains(InventoryManager.TOKEN_SWORD) && wordList.contains(TOKEN_MYSELF))) || wordList.contains(TOKEN_SUICIDE)) {
+            returnValue.add("globalSounds/anywhere_00.ogg");
+        } else if((wordList.contains(TOKEN_USE) ||wordList.contains(TOKEN_LIGHT)) && wordList.contains(mInventoryManager.TOKEN_TORCH) && wordList.contains(mInventoryManager.TOKEN_COAL) && mInventoryManager.contains(InventoryItem.BURNING_COAL) && mInventoryManager.contains(InventoryItem.UNLIT_TORCH)){
             mInventoryManager.remove(InventoryItem.UNLIT_TORCH);
             mInventoryManager.remove(InventoryItem.BURNING_COAL);
             mInventoryManager.add(InventoryItem.BURNING_TORCH);
-            List<String> returnValue = new ArrayList<>();
             returnValue.add("globalSounds/anywhere_01.ogg");
-            return returnValue;
         }
-        return null;
+        return returnValue;
     }
 
     public InventoryManager getInventoryManager() {
@@ -68,6 +75,18 @@ public class Game {
 
     public PlaceManager getPlaceManager() {
         return placeManager;
+    }
+
+    public static String getRandomCantDoThatSound() {
+        return "globalSounds/cant_do_that_0" + (int) ((Math.random() * 7)) + ".ogg";
+    }
+
+    public static String getRandomAlreadyDidThatSound() {
+        return "globalSounds/did_that_0" + (int) ((Math.random() * 2)) + ".ogg";
+    }
+
+    public static String getRandomAlreadyDidThatMonsterSound() {
+        return "globalSounds/did_that_monster_0" + (int) ((Math.random() * 3)) + ".ogg";
     }
     //endregion
 

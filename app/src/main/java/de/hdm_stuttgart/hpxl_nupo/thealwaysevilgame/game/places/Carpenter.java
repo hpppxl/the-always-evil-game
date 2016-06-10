@@ -58,6 +58,8 @@ public class Carpenter extends Place{
         // catch iventory command
         if(wordlist.contains(PlaceManager.TOKEN_LOOK_AROUND)){
             soundList.add(getWelcomeMediaFile());
+        }else if((wordlist.contains(Game.TOKEN_USE) ||wordlist.contains(Game.TOKEN_LIGHT) ) && wordlist.contains(mInventoryManager.TOKEN_TORCH) && wordlist.contains(mInventoryManager.TOKEN_COAL) && mInventoryManager.contains(InventoryItem.BURNING_COAL) && mInventoryManager.contains(InventoryItem.UNLIT_TORCH)) {
+            soundList.add("carpenter/carpenter_01.ogg");
         }
         return soundList;
     }

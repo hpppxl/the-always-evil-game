@@ -58,17 +58,13 @@ public class TravelingSalesman extends Place{
         // catch iventory command
         if(wordlist.contains(PlaceManager.TOKEN_LOOK_AROUND)){
             soundList.add(getWelcomeMediaFile());
-        } else if(wordlist.contains(PlaceManager.TOKEN_WEST)|| wordlist.contains(PlaceManager.TOKEN_EAST)) {
-            // TODO: replace with global
-            soundList.add("countryside/countryside_06.ogg");
         } else if(((wordlist.contains(Game.TOKEN_USE) && wordlist.contains(mInventoryManager.TOKEN_SWORD)) || wordlist.contains(Game.TOKEN_KILL)) && salesmanAlive) {
             salesmanAlive = false;
             soundList.add("salesman/salesman_04.ogg");
             mInventoryManager.add(InventoryItem.RAT_POISON_AND_COKE);
         }
         else if(((wordlist.contains(Game.TOKEN_USE) && wordlist.contains(mInventoryManager.TOKEN_SWORD)) || wordlist.contains(Game.TOKEN_KILL)) && !salesmanAlive){
-            // TODO: replace with: global you already did that you monster
-            soundList.add("salesman/salesman_04.ogg");
+            soundList.add(Game.getRandomAlreadyDidThatMonsterSound());
         }
         else if(((wordlist.contains(Game.TOKEN_BUY) && (wordlist.contains(mInventoryManager.TOKEN_POISON) || wordlist.contains(mInventoryManager.TOKEN_COKE))) || ((wordlist.contains(Game.TOKEN_USE) || wordlist.contains(Game.TOKEN_GIVE)) && wordlist.contains(mInventoryManager.TOKEN_COIN))) && mInventoryManager.contains(InventoryItem.GOLDEN_COIN)){
             mInventoryManager.remove(InventoryItem.GOLDEN_COIN);
@@ -78,7 +74,12 @@ public class TravelingSalesman extends Place{
         else if(((wordlist.contains(Game.TOKEN_BUY) && (wordlist.contains(mInventoryManager.TOKEN_POISON) || wordlist.contains(mInventoryManager.TOKEN_COKE))) || ((wordlist.contains(Game.TOKEN_USE) || wordlist.contains(Game.TOKEN_GIVE)) && wordlist.contains(mInventoryManager.TOKEN_COIN))) && !mInventoryManager.contains(InventoryItem.GOLDEN_COIN)){
             soundList.add("salesman/salesman_03.ogg");
         }
-        return soundList;
+        else if(((wordlist.contains(Game.TOKEN_BUY)) || ((wordlist.contains(Game.TOKEN_USE) || wordlist.contains(Game.TOKEN_GIVE)) && wordlist.contains(mInventoryManager.TOKEN_COIN))) && !mInventoryManager.contains(InventoryItem.GOLDEN_COIN)){
+            soundList.add("salesman/salesman_06.ogg");
+        }else if((wordlist.contains(Game.TOKEN_TALK) || wordlist.contains(Game.TOKEN_SPEAK)) && salesmanAlive){
+            soundList.add("salesman/salesman_07.ogg");
+        }
+            return soundList;
     }
 
     @Override

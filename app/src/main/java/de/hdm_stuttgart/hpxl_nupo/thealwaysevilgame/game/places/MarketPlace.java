@@ -76,9 +76,14 @@ public class MarketPlace extends Place{
             soundList.add("market/market_05.ogg");
         } else if (((wordlist.contains(Game.TOKEN_USE) || wordlist.contains(Game.TOKEN_GIVE)) && wordlist.contains(mInventoryManager.TOKEN_BUCKET)) && oldManAlive && bucketAttachedToWell){
             soundList.add("market/market_06.ogg");
-            // TODO: DUN-DIN DUN-DUN
+            soundList.add("globalSounds/start_listening.ogg");
+            soundList.add("globalSounds/no_input.ogg");
             soundList.add("market/market_07.ogg");
             oldManAlive = false;
+        }else if((wordlist.contains(Game.TOKEN_KILL) || (wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_SWORD))) && oldManAlive){
+            soundList.add("market/market_08.ogg");
+        }else if((wordlist.contains(Game.TOKEN_KILL) || (wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_SWORD))) && !oldManAlive){
+            soundList.add(Game.getRandomAlreadyDidThatMonsterSound());
         }
         return soundList;
     }

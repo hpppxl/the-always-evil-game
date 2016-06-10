@@ -63,6 +63,11 @@ public class Tavern extends Place{
         } else if(((wordlist.contains(Game.TOKEN_USE) || wordlist.contains(Game.TOKEN_GIVE)) && (wordlist.contains(TOKEN_BARKEEPER) || wordlist.contains(TOKEN_BARTENDER))) && bartenderAlive && (wordlist.contains(InventoryManager.TOKEN_COKE) || wordlist.contains(InventoryManager.TOKEN_POISON)) && mInventoryManager.contains(InventoryItem.RAT_POISON_AND_COKE)) {
             soundList.add("tavern/tavern_03.ogg");
             bartenderAlive = false;
+        }else if(((wordlist.contains(Game.TOKEN_KILL) && (wordlist.contains(TOKEN_BARTENDER) || wordlist.contains(TOKEN_BARKEEPER))) || (wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_SWORD) && (wordlist.contains(TOKEN_BARTENDER) || wordlist.contains(TOKEN_BARKEEPER)))) && bartenderAlive){
+            soundList.add("tavern/tavern_04.ogg");
+            bartenderAlive = false;
+        }else if(((wordlist.contains(Game.TOKEN_KILL) && (wordlist.contains(TOKEN_BARTENDER) || wordlist.contains(TOKEN_BARKEEPER))) || (wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_SWORD) && (wordlist.contains(TOKEN_BARTENDER) || wordlist.contains(TOKEN_BARKEEPER)))) && !bartenderAlive){
+            soundList.add(Game.getRandomAlreadyDidThatMonsterSound());
         }
         return soundList;
     }

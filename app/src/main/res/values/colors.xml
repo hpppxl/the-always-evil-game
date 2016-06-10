@@ -12,4 +12,5 @@
     <color name="colorLocation">#EDF1F2</color>
     <color name="colorLogoBackground">#EDB405</color>
     <color name="colorButton">#FFFC19</color>
+    <color name="colorInactiveOverlay">#AA000000</color>
 </resources>

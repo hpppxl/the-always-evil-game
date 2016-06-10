@@ -101,9 +101,8 @@ public class GameActivity extends AppCompatActivity implements
                 startGame();
             }else{
                 //too bad, inform the user
-                //TODO: replace with right sound
                 mGameShouldEnd = true;
-                playMediaFile("clearing/clearing_01.ogg");
+                playMediaFile("globalSounds/no_mic_access.ogg");
             }
         }
     }
@@ -199,13 +198,9 @@ public class GameActivity extends AppCompatActivity implements
 
         mFeedbackAgent.send(feedback);
 
-        if (nextSoundFiles == null || nextSoundFiles.size() == 0) {
-            // TODO change to "can't do that sounds"
-            playRandomWhatSound();
-        } else {
-            mPlaybackQueue.addAll(nextSoundFiles);
-            flushPlaybackQueue();
-        }
+
+        mPlaybackQueue.addAll(nextSoundFiles);
+        flushPlaybackQueue();
     }
 
     @Override
@@ -296,11 +291,12 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     public void playRandomWhatSound() {
-        mPlaybackQueue.add("globalSounds/what" + (int) ((Math.random() * 4) + 1) + ".ogg");
+        mPlaybackQueue.add("globalSounds/what_0" + (int) ((Math.random() * 8)) + ".ogg");
         flushPlaybackQueue();
     }
 
     public void startGame(){
-        playMediaFile("clearing/clearing_00.ogg");
+        //playMediaFile("clearing/clearing_00.ogg");
+        playMediaFile("clearing/clearing_01.ogg");
     }
 }

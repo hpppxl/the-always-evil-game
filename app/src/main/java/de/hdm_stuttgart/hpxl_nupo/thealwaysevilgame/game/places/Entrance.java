@@ -51,21 +51,17 @@ public class Entrance extends Place {
         // catch iventory command
         if(wordlist.contains(PlaceManager.TOKEN_LOOK_AROUND)){
             soundList.add(getWelcomeMediaFile());
-        } else if(wordlist.contains(PlaceManager.TOKEN_SOUTH)) {
-            // TODO: replace with global
-            soundList.add("countryside/countryside_06.ogg");
         } else if(((wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_TORCH)) || wordlist.contains(Game.TOKEN_LIGHT) || wordlist.contains(TOKEN_FIRE) ) && wordlist.contains(TOKEN_HAYSTACK) && mInventoryManager.contains(InventoryItem.UNLIT_TORCH)) {
             soundList.add("entrance/entrance_02.ogg");
         } else if(((wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_TORCH)) || wordlist.contains(Game.TOKEN_LIGHT) || wordlist.contains(TOKEN_FIRE) ) && wordlist.contains(TOKEN_HAYSTACK) && mInventoryManager.contains(InventoryItem.BURNING_COAL)) {
-            // TODO: sound that you try to light the torch but accidentally light the haystack
-            soundList.add("entrance/entrance_03.ogg");
-        }
-        else if(((wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_TORCH)) || wordlist.contains(Game.TOKEN_LIGHT) || wordlist.contains(TOKEN_FIRE) ) && wordlist.contains(TOKEN_HAYSTACK) && mInventoryManager.contains(InventoryItem.BURNING_TORCH)) {
+            soundList.add("entrance/entrance_05.ogg");
+        } else if(((wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_TORCH)) || wordlist.contains(Game.TOKEN_LIGHT) || wordlist.contains(TOKEN_FIRE) ) && wordlist.contains(TOKEN_HAYSTACK) && mInventoryManager.contains(InventoryItem.BURNING_TORCH)) {
             soundList.add("entrance/entrance_03.ogg");
         } else if((wordlist.contains(Game.TOKEN_TAKE) && wordlist.contains(InventoryManager.TOKEN_TORCH)) && !mInventoryManager.contains(InventoryItem.UNLIT_TORCH)) {
             mInventoryManager.add(InventoryItem.UNLIT_TORCH);
-            // TODO: add take torch sound
-            //soundList.add("entrance/entrance_04.ogg");
+            soundList.add("entrance/entrance_04.ogg");
+        } else if((wordlist.contains(Game.TOKEN_TAKE) && wordlist.contains(InventoryManager.TOKEN_TORCH)) && mInventoryManager.contains(InventoryItem.UNLIT_TORCH)) {
+            soundList.add(Game.getRandomAlreadyDidThatSound());
         }
         return soundList;
     }

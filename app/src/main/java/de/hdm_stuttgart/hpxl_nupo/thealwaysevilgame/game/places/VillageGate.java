@@ -60,7 +60,6 @@ private boolean guardAlive = true;
         if(wordlist.contains(PlaceManager.TOKEN_LOOK_AROUND)){
             soundList.add(getWelcomeMediaFile());
         } else if(wordlist.contains(PlaceManager.TOKEN_WEST)|| wordlist.contains(PlaceManager.TOKEN_EAST)) {
-            // TODO: replace with global
             soundList.add("countryside/countryside_06.ogg");
         } else if(((wordlist.contains(Game.TOKEN_TALK) || wordlist.contains(Game.TOKEN_SPEAK)) && (wordlist.contains(TOKEN_GUARD) || wordlist.contains(TOKEN_KEEPER))) && guardAlive) {
             soundList.add("gate/gate_01.ogg");
@@ -84,6 +83,9 @@ private boolean guardAlive = true;
         else if(((wordlist.contains(Game.TOKEN_KILL) && wordlist.contains(TOKEN_GUARD)) || (wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_SWORD) && wordlist.contains(TOKEN_GUARD))) && !guardBribed && guardAlive) {
             soundList.add("gate/gate_06.ogg");
             guardAlive = false;
+        }
+        else if(((wordlist.contains(Game.TOKEN_KILL) && wordlist.contains(TOKEN_GUARD)) || (wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_SWORD) && wordlist.contains(TOKEN_GUARD))) && !guardAlive) {
+            soundList.add(Game.getRandomAlreadyDidThatMonsterSound());
         }
         else if(((wordlist.contains(Game.TOKEN_KILL) && wordlist.contains(TOKEN_GUARD)) || (wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_SWORD) && wordlist.contains(TOKEN_GUARD))) && guardBribed && guardAlive) {
             soundList.add("gate/gate_06.ogg");

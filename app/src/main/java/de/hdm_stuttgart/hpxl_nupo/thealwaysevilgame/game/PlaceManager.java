@@ -60,8 +60,8 @@ public class PlaceManager {
     }
 
     //region Properties & Members
-    // TODO: reset to entrance
-    private PlaceIdentifier mCurrentPlace = ENTRANCE;
+    //TODO: replace with clearing
+    private PlaceIdentifier mCurrentPlace = CLEARING;
 //endregion
 
 //region Constructors
@@ -76,20 +76,33 @@ public class PlaceManager {
     public List<String> parseSpeechInput(List<String> wordlist){
         List<String> returnList = new ArrayList<>();
         if(wordlist.contains(TOKEN_NORTH)){
-            goNorth();
-            returnList.add(getCurrentPlace().getWelcomeMediaFile());
+            if(goNorth() != null){
+                returnList.add(getCurrentPlace().getWelcomeMediaFile());
+            }else{
+                returnList.add(getRandomCantGoThatDirectionSound());
+            }
+
         }
         else if(wordlist.contains(TOKEN_EAST)){
-            goEast();
-            returnList.add( getCurrentPlace().getWelcomeMediaFile());
+            if(goEast() != null){
+                returnList.add( getCurrentPlace().getWelcomeMediaFile());
+            }else{
+                returnList.add(getRandomCantGoThatDirectionSound());
+            }
         }
         else if(wordlist.contains(TOKEN_SOUTH)){
-            goSouth();
-            returnList.add( getCurrentPlace().getWelcomeMediaFile());
+            if(goSouth() != null){
+                returnList.add( getCurrentPlace().getWelcomeMediaFile());
+            }else{
+                returnList.add(getRandomCantGoThatDirectionSound());
+            }
         }
         else if(wordlist.contains(TOKEN_WEST)){
-            goWest();
-            returnList.add( getCurrentPlace().getWelcomeMediaFile());
+            if(goWest() != null){
+                returnList.add( getCurrentPlace().getWelcomeMediaFile());
+            }else{
+                returnList.add(getRandomCantGoThatDirectionSound());
+            }
         }
         return returnList;
     }
@@ -124,6 +137,10 @@ public class PlaceManager {
             return newLocation;
         }
         return null;
+    }
+
+    public static String getRandomCantGoThatDirectionSound() {
+        return "globalSounds/cant_go_0" + (int) ((Math.random() * 5)) + ".ogg";
     }
 
     public String getLocationName(){
