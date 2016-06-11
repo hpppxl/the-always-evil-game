@@ -12,6 +12,7 @@ import android.speech.SpeechRecognizer;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -58,6 +59,7 @@ public class GameActivity extends AppCompatActivity implements
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -83,7 +85,7 @@ public class GameActivity extends AppCompatActivity implements
         mMediaPlayer.setOnCompletionListener(this);
 
         //checking for record audio permission
-        int permissionStatus = getApplicationContext().checkSelfPermission(Manifest.permission.RECORD_AUDIO);
+        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
         if(permissionStatus != PackageManager.PERMISSION_GRANTED){
             Log.i(LOG_TAG, "permission for record audio denied initially");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, PERMISSION_REQUEST_CODE);
