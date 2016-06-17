@@ -146,6 +146,10 @@ public class PlaceManager {
     public String getLocationName(){
         return mCurrentPlace.name();
     }
+
+    public void setLocation(PlaceIdentifier newLocation){
+        this.mCurrentPlace = newLocation;
+    }
 //endregion
 
 //region Inner Classes / Interfaces

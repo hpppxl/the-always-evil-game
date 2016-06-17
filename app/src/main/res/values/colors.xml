@@ -13,4 +13,5 @@
     <color name="colorLogoBackground">#EDB405</color>
     <color name="colorButton">#FFFC19</color>
     <color name="colorInactiveOverlay">#AA000000</color>
+    <color name="colorInactiveText">#A87D5B</color>
 </resources>

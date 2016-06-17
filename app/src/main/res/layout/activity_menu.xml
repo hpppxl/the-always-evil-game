@@ -39,17 +39,6 @@
         android:background="@android:color/transparent"
         android:textSize="@dimen/menu_text_size_huge" />
 
-    <de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.ui.ComicTextButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_map"
-        android:id="@+id/btn_map"
-        android:backgroundTint="@color/colorButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
-        android:background="@android:color/transparent"
-        android:textSize="@dimen/menu_text_size_medium"  />
 
     <de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.ui.ComicTextButton
         android:layout_width="wrap_content"

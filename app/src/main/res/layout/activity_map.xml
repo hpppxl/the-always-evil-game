@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:grid="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,24 +19,201 @@
         android:text="@string/app_name"
         android:textColor="@android:color/black"
         android:textSize="@dimen/menu_text_title_size"
-        android:id="@+id/textView"/>
+        android:id="@+id/textView" />
 
     <de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.ui.ComicTextFont
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/level1_name"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/menu_text_size_small"/>
+        android:textSize="@dimen/menu_text_size_small" />
 
-    <ScrollView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:layout_width="wrap_content"
+        android:layout_height="381dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/level1_map"/>
-    </ScrollView>
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/blacksmith"
+                android:scaleType="fitStart"
+                android:layout_margin="5dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/marketplace"
+                android:scaleType="fitStart"
+                android:layout_margin="5dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/travelling_salesman"
+                android:scaleType="fitStart"
+                android:layout_margin="5dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/carpenter"
+                android:scaleType="fitStart"
+                android:layout_margin="5dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/btn_start_village"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="fitStart"
+                android:src="@drawable/entrance_inactive"
+                android:layout_margin="5dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/tavern"
+                android:scaleType="fitStart"
+                android:layout_margin="5dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="fitStart"
+                android:src="@drawable/village_gate"
+                android:layout_margin="5dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="fitStart"
+                android:src="@drawable/countryside"
+                android:layout_margin="5dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/btn_start_clearing"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/clearing_active"
+                android:scaleType="fitStart"
+                android:layout_margin="5dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"  />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.ui.ComicTextFont
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_w_tutorial_label"
+        android:id="@+id/txt_explanation"
+        android:textColor="@android:color/black"
+        android:background="@android:color/transparent"
+        android:textAlignment="center"
+        android:textSize="@dimen/menu_text_size_small" />
+    <de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.ui.ComicTextButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_startGame"
+        android:id="@+id/btn_startGame"
+        android:background="@android:color/transparent"
+        android:textSize="@dimen/menu_text_size_huge" />
+
 </LinearLayout>

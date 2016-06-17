@@ -36,19 +36,10 @@ public class MenuActivity extends Activity {
         setContentView(R.layout.activity_menu);
 
         Button startButton = (Button)findViewById(R.id.btn_startGame);
-        Button mapButton = (Button)findViewById(R.id.btn_map);
         Button aboutButton = (Button)findViewById(R.id.btn_about);
         logo = (ImageView)findViewById(R.id.img_logo);
 
         startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gameIntent = new Intent(MenuActivity.this, GameActivity.class);
-                startActivity(gameIntent);
-            }
-        });
-
-        mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent gameIntent = new Intent(MenuActivity.this, MapActivity.class);

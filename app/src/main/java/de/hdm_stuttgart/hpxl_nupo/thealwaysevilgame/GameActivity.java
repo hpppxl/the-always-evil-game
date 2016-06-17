@@ -31,6 +31,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.feedback.FeedbackAgent;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.feedback.FeedbackMessage;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.Game;
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.InventoryItem;
+import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.PlaceManager;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.LancasterStemmer;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.StopWordFilter;
 import de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.game.nlp.Tokenizer;
@@ -41,6 +43,9 @@ public class GameActivity extends AppCompatActivity implements
     private static final String LOG_TAG = GameActivity.class.getSimpleName();
     private static final int INITIAL_QUEUE_CAPACITY = 10;
     private static final int PERMISSION_REQUEST_CODE = 0x01;
+    public static final String EXTRA_START_LOCATION = "start_location";
+    public static final String EXTRA_LOCATION_CLEARING = "clearing";
+    public static final String EXTRA_LOCATION_VILLAGE = "village";
 
     private TextView returnedText;
     private ImageButton speakButton;
@@ -300,7 +305,14 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     public void startGame(){
-        playMediaFile("clearing/clearing_00.ogg");
-        //playMediaFile("clearing/clearing_01.ogg");
+        String startLocation = getIntent().getExtras().getString(EXTRA_START_LOCATION);
+
+        if(startLocation.equals(EXTRA_LOCATION_VILLAGE)) {
+            mGame.getInventoryManager().add(InventoryItem.GOLDEN_COIN);
+            mGame.getPlaceManager().setLocation(PlaceManager.PlaceIdentifier.ENTRANCE);
+            playMediaFile("entrance/entrance_00.ogg");
+        }else {
+            playMediaFile("clearing/clearing_00.ogg");
+        }
     }
 }

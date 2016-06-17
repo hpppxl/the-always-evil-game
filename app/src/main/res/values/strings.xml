@@ -23,4 +23,7 @@
     <string name="btn_about">About</string>
     <string name="level1_name">The Village</string>
     <string name="beta_label">UI coming soon \n...maybe...</string>
+    <string name="start_wo_tutorial_label">start without tutorial</string>
+    <string name="start_w_tutorial_label">start with tutorial</string>
+    <string name="btn_startGame">Start Game</string>
 </resources>
