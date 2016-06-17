@@ -18,8 +18,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -57,6 +59,8 @@ public class GameActivity extends AppCompatActivity implements
     private Queue<String> mPlaybackQueue = new ArrayBlockingQueue<>(INITIAL_QUEUE_CAPACITY);
     private FeedbackAgent mFeedbackAgent = new FeedbackAgent();
     private boolean mGameShouldEnd = false;
+    private Switch mAutoListen;
+    private ImageButton mListenBtn;
 
 
     @Override
@@ -74,6 +78,17 @@ public class GameActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_game);
         returnedText = (TextView) findViewById(R.id.textView1);
         speakButton = (ImageButton) findViewById(R.id.speakButton);
+        mAutoListen = (Switch)findViewById(R.id.sw_auto_listen);
+        mListenBtn = (ImageButton) findViewById(R.id.speakButton);
+
+        mListenBtn.setEnabled(false);
+        mListenBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listen();
+            }
+        });
+
         speech = SpeechRecognizer.createSpeechRecognizer(this);
         speech.setRecognitionListener(this);
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -272,11 +287,20 @@ public class GameActivity extends AppCompatActivity implements
                 //the game has ended due to a user action
                 this.finish();
             }else {
-                performingSpeechSetup = true;
-                speech.startListening(recognizerIntent);
-                enableSpeakButton();
+                if(mAutoListen.isChecked()) {
+                    listen();
+                }else{
+                    mListenBtn.setEnabled(true);
+                }
             }
         }
+    }
+
+    public void listen(){
+        mListenBtn.setEnabled(false);
+        performingSpeechSetup = true;
+        speech.startListening(recognizerIntent);
+        enableSpeakButton();
     }
 
     public void enableSpeakButton() {

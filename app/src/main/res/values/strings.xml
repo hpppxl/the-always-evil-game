@@ -26,4 +26,5 @@
     <string name="start_wo_tutorial_label">start without tutorial</string>
     <string name="start_w_tutorial_label">start with tutorial</string>
     <string name="btn_startGame">Start Game</string>
+    <string name="switch_auto_listen">Auto Listen</string>
 </resources>

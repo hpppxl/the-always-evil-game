@@ -119,11 +119,21 @@
             android:layout_marginTop="26dp"
             android:src="@android:drawable/ic_btn_speak_now"
             android:text="ToggleButton" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/switch_auto_listen"
+            android:id="@+id/sw_auto_listen"
+            android:layout_gravity="center_horizontal"
+            android:checked="true" />
+
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:background="@color/colorInactiveOverlay">
     <de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.ui.ComicTextFont
         android:layout_width="match_parent"
