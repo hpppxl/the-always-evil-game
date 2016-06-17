@@ -64,7 +64,7 @@ private static final String LOG_TAG = Countryside.class.getSimpleName();
         if(wordlist.contains(PlaceManager.TOKEN_LOOK_AROUND)){
             soundList.add(getWelcomeMediaFile());
         } else if(wordlist.contains(PlaceManager.TOKEN_WEST)|| wordlist.contains(PlaceManager.TOKEN_SOUTH)|| wordlist.contains(PlaceManager.TOKEN_EAST)) {
-            soundList.add("clearing/countryside_06.ogg");
+            soundList.add("countryside/countryside_06.ogg");
         } else if(((wordlist.contains(Game.TOKEN_USE) && wordlist.contains(InventoryManager.TOKEN_SWORD) && wordlist.contains(TOKEN_DONKEY)) || (wordlist.contains(Game.TOKEN_KILL) && wordlist.contains(TOKEN_DONKEY))) && donkeyAlive){
             donkeyAlive = false;
             soundList.add("countryside/countryside_04.ogg");

@@ -59,7 +59,7 @@ public class GameActivity extends AppCompatActivity implements
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -73,7 +73,9 @@ public class GameActivity extends AppCompatActivity implements
         speech.setRecognitionListener(this);
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE,
-                "en");
+                "en-US");
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,
+                "en-US");
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
                 this.getPackageName());
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -298,7 +300,7 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     public void startGame(){
-        //playMediaFile("clearing/clearing_00.ogg");
-        playMediaFile("clearing/clearing_01.ogg");
+        playMediaFile("clearing/clearing_00.ogg");
+        //playMediaFile("clearing/clearing_01.ogg");
     }
 }
