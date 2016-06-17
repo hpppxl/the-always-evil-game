@@ -119,12 +119,17 @@ public class GameActivity extends AppCompatActivity implements
 
     @Override
     public void onResume() {
+        //reset the game state
+        mGame = new Game();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if(mMediaPlayer.isPlaying()) {
+            mMediaPlayer.stop();
+        }
         if (speech != null) {
             speech.destroy();
             Log.i(LOG_TAG, "destroy");
