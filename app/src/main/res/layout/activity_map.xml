@@ -24,7 +24,7 @@
     <de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame.ui.ComicTextFont
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/level1_name"
+        android:text="@string/choose_start_point"
         android:textColor="@android:color/black"
         android:textSize="@dimen/menu_text_size_small" />
 

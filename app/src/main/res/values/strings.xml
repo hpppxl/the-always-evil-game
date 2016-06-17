@@ -21,7 +21,7 @@
     <string name="btn_newGame">New Game</string>
     <string name="btn_map">Map</string>
     <string name="btn_about">About</string>
-    <string name="level1_name">The Village</string>
+    <string name="choose_start_point">Choose where you want to start your adventure</string>
     <string name="beta_label">UI coming soon \n...maybe...</string>
     <string name="start_wo_tutorial_label">start without tutorial</string>
     <string name="start_w_tutorial_label">start with tutorial</string>
