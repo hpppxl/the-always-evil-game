@@ -134,8 +134,6 @@ public class GameActivity extends AppCompatActivity implements
 
     @Override
     public void onResume() {
-        //reset the game state
-        mGame = new Game();
         super.onResume();
     }
 
@@ -316,10 +314,14 @@ public class GameActivity extends AppCompatActivity implements
             String soundName = mPlaybackQueue.poll();
             if (soundName != null) {
                 AssetFileDescriptor fileDescriptor = this.getAssets().openFd(soundName);
-                mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
-                fileDescriptor.close();
-                mMediaPlayer.prepare();
-                mMediaPlayer.start();
+                try {
+                    mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
+                    fileDescriptor.close();
+                    mMediaPlayer.prepare();
+                    mMediaPlayer.start();
+                }catch (IllegalStateException e){
+                    Log.e(LOG_TAG, "illegal state in media player", e);
+                }
                 return true;
             }
         } catch (IOException e) {
@@ -329,8 +331,7 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     public void playRandomWhatSound() {
-        mPlaybackQueue.add("globalSounds/what_0" + (int) ((Math.random() * 8)) + ".ogg");
-        flushPlaybackQueue();
+        playMediaFile("globalSounds/what_0" + (int) ((Math.random() * 8)) + ".ogg");
     }
 
     public void startGame(){
