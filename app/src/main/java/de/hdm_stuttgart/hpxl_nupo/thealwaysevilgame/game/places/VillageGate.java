@@ -53,9 +53,6 @@ private boolean guardAlive = true;
     @Override
     public List<String> parseSpeechInput(List<String> wordlist) {
         List<String> soundList = new ArrayList<>();
-        for(String word : wordlist) {
-            Log.d(LOG_TAG, word);
-        }
         // catch iventory command
         if(wordlist.contains(PlaceManager.TOKEN_LOOK_AROUND)){
             soundList.add(getWelcomeMediaFile());

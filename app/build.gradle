@@ -8,8 +8,8 @@ android {
         applicationId "de.hdm_stuttgart.hpxl_nupo.thealwaysevilgame"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 5
+        versionName "1.0.5"
     }
     buildTypes {
         release {

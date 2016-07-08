@@ -22,7 +22,6 @@ public class TravelingSalesman extends Place{
 
     //region Properties & Members
     private boolean salesmanAlive = true;
-    private boolean visited = false;
 //endregion
 
 //region Constructors
@@ -84,12 +83,8 @@ public class TravelingSalesman extends Place{
 
     @Override
     public String getWelcomeMediaFile() {
-        if(salesmanAlive && !visited) {
-            visited = true;
+        if(salesmanAlive) {
             return "salesman/salesman_00.ogg";
-        }
-        else if(salesmanAlive && visited){
-            return "salesman/salesman_09.ogg";
         }
         else{
             return "salesman/salesman_01.ogg";
